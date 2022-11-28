@@ -15,8 +15,9 @@ public class Frame extends JFrame {
     int x = optSettings.length == 3 && optSettings[2] != 0 ? optSettings[1] : 300;
     int y = optSettings.length == 4 && optSettings[3] != 0 ? optSettings[1] : 100;
 
-    System.out.printf("W: %d  -  H: %d \t", w, h);
-    System.out.printf("X: %d  -  Y: %d \n", x, y);
+    System.out.println("Frame:");
+    System.out.printf(" W: %d  |  H: %d \n", w, h);
+    System.out.printf(" X: %d  |  Y: %d \n\n", x, y);
 
     setBounds(x, y, w, h);
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

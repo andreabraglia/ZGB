@@ -83,6 +83,6 @@ public class Transazione {
      * @return Stringa che rappresenta l'oggetto.
      */
     public String toString() {
-        return String.format("%s %s %s %s", amount, type, description, date);
+        return String.format("Amount: %s\nType: %s\nDescription: %s\nDate: %s", amount, type, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
     }
 }
