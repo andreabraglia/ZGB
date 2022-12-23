@@ -7,4 +7,4 @@ ECHO %files%
 javac -g -d bin %files%
 
 @REM Run the program
-java -cp bin Main
+java -cp bin src.Main

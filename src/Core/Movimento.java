@@ -5,18 +5,12 @@ import java.time.LocalDateTime;
 /**
  * Classe Transazione.
  */
-public class Transazione {
-
-
+public class Movimento {
     /**
      * Importo della transazione
      */
-    private int amount;
+    private float amount;
 
-    /**
-     * Tipo della transazione
-     */
-    private TransactionType type;
     /**
      * Descrizione della transazione
      */
@@ -30,13 +24,11 @@ public class Transazione {
      * Costruttore della classe Transazione
      *
      * @param amount      Importo della transazione
-     * @param type        Tipo della transazione
      * @param description Descrizione della transazione
      * @param date        Data della transazione
      */
-    public Transazione(int amount, TransactionType type, String description, LocalDateTime date) {
+    public Movimento(float amount, String description, LocalDateTime date) {
         this.amount = amount;
-        this.type = type;
         this.description = description;
         this.date = date;
     }
@@ -46,17 +38,8 @@ public class Transazione {
      *
      * @return amount
      */
-    public int getAmount() {
+    public float getAmount() {
         return amount;
-    }
-
-    /**
-     * Restituisce il tipo di transazione
-     *
-     * @return the type
-     */
-    public TransactionType getType() {
-        return type;
     }
 
     /**
@@ -83,6 +66,6 @@ public class Transazione {
      * @return Stringa che rappresenta l'oggetto.
      */
     public String toString() {
-        return String.format("Amount: %s\nType: %s\nDescription: %s\nDate: %s", amount, type, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
+        return String.format("Amount: %s\nDescription: %s\nDate: %s", amount, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
     }
 }

@@ -222,3 +222,6 @@ Temporary Items
 # that are supposed to be shared within teams.
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,java,macos,visualstudiocode,webstorm+all
+
+# Custom files
+conto_corrente.txt
