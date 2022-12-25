@@ -68,4 +68,17 @@ public class Movimento {
     public String toString() {
         return String.format("Amount: %s\nDescription: %s\nDate: %s", amount, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
     }
+
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }

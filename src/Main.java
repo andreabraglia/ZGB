@@ -11,7 +11,6 @@ import GUI.*;
 public class Main {
   public static void main(String[] args) {
     System.out.println("[TEST] Inizio test creazione movimenti");
-    Graphic.main(args);
     Movimento t1 = new Movimento(100, "Entrata di prova", LocalDateTime.now());
     Movimento t2 = new Movimento(-100, "Uscita di prova", LocalDateTime.now());
     System.out.println("1:");
@@ -51,14 +50,18 @@ public class Main {
     }
 
     // Stampa i dati del conto corrente letto da file
-    System.out.println("Numero CC: " + cc2.numeroCC);
+    System.out.println("Numero CC: " + cc2.getNumeroCC());
     System.out.println("Saldo attuale: " + cc2.getSaldoAttuale());
-    System.out.println("Proprietario: " + cc2.proprietario);
-    for (int i = 0; i < cc2.contatoreMovimenti; i++) {
-      Movimento movimento = cc2.movimenti[i];
+    System.out.println("Intestatario: " + cc2.getIntestatario());
+    for (int i = 0; i < cc2.getContatoreMovimenti(); i++) {
+      Movimento movimento = cc2.getMovimento(i);
       System.out.println("Movimento " + i + ": " + movimento.getAmount() + " (" + movimento.getDescription() + ") " + movimento.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
+
     System.out.println("-----------------------");
 
+    // Init GUI
+    MainFrame main = new MainFrame();
+    main.setVisible(true);
   }
 }

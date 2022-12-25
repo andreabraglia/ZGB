@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Panels;
 
 
 //import javax.swing.JPanel;
@@ -6,6 +6,9 @@ package GUI;
 //import javax.swing.JTextField;
 //import javax.swing.BoxLayout;
 //import javax.swing.JButton;
+import Core.ContoCorrente;
+import GUI.BasicComponents.CenteredPanel;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -13,17 +16,14 @@ import java.awt.event.*;
 
 
 public class CreationAccountPanel extends CenteredPanel {
-  // Proprietà del conto corrente
-  private int numeroCC;
-  private double saldoAttuale;
-  private String intestatario;
-
   // Campi di input per le proprietà del conto corrente
   private JTextField numeroCCField;
   private JTextField saldoAttualeField;
   private JTextField intestatarioField;
 
-  public CreationAccountPanel() {
+  public CreationAccountPanel(ContoCorrente contoCorrente) {
+    super();
+
     // Crea un nuovo pannello per i campi di input
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -33,15 +33,15 @@ public class CreationAccountPanel extends CenteredPanel {
     // Aggiunge i campi di input per le proprietà del conto corrente
     mainPanel.add(new JLabel("Numero conto corrente:"));
 
-    numeroCCField = new JTextField();
+    numeroCCField = new JTextField(contoCorrente.getNumeroCC() + "");
     mainPanel.add(numeroCCField);
-    mainPanel.add(new JLabel("Saldo attuale:"));
+    mainPanel.add(new JLabel("Saldo iniziale:"));
 
-    saldoAttualeField = new JTextField();
+    saldoAttualeField = new JTextField(String.valueOf(contoCorrente.getSaldoIniziale()));
     mainPanel.add(saldoAttualeField);
     mainPanel.add(new JLabel("Intestatario:"));
 
-    intestatarioField = new JTextField();
+    intestatarioField = new JTextField(contoCorrente.getIntestatario());
     mainPanel.add(intestatarioField);
 
     mainPanel.add(createButton);
@@ -54,15 +54,15 @@ public class CreationAccountPanel extends CenteredPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         // Legge i valori inseriti nei campi di input
-        numeroCC = Integer.parseInt(numeroCCField.getText());
-        saldoAttuale = Double.parseDouble(saldoAttualeField.getText());
-        intestatario = intestatarioField.getText();
+        contoCorrente.setNumeroCC(Integer.parseInt(numeroCCField.getText()));
+        contoCorrente.setSaldoIniziale(Float.parseFloat(saldoAttualeField.getText()));
+        contoCorrente.setIntestatario(intestatarioField.getText());
 
         // Crea il conto corrente utilizzando i valori inseriti nei campi di input
         System.out.println("Conto corrente creato con successo!");
-        System.out.println("Numero conto corrente: " + numeroCC);
-        System.out.println("Saldo attuale: " + saldoAttuale);
-        System.out.println("Intestatario: " + intestatario);
+        System.out.println("Numero conto corrente: " + contoCorrente.getNumeroCC());
+        System.out.println("Saldo attuale: " + contoCorrente.getSaldoIniziale());
+        System.out.println("Intestatario: " + contoCorrente.getIntestatario());
       }
     });
   }

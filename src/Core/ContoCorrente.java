@@ -10,16 +10,16 @@ import java.time.format.DateTimeFormatter;
 
 
 public class ContoCorrente {
-  public int numeroCC;
-  public float saldoIniziale;
-  public Movimento[] movimenti;
-  public int contatoreMovimenti;
-  public String proprietario;
+  private int numeroCC;
+  private float saldoIniziale;
+  private Movimento[] movimenti;
+  private int contatoreMovimenti;
+  private String intestatario;
 
-  public ContoCorrente(int numeroCC, float saldoIniziale, String proprietario) {
+  public ContoCorrente(int numeroCC, float saldoIniziale, String intestatario) {
     this.numeroCC = numeroCC;
     this.saldoIniziale = saldoIniziale;
-    this.proprietario = proprietario;
+    this.intestatario = intestatario;
     this.movimenti = new Movimento[100];
     this.contatoreMovimenti = 0;
   }
@@ -47,9 +47,6 @@ public class ContoCorrente {
     }
   }
 
-  /**
-   *
-   */
   public void print() {
     System.out.println("Numero CC: " + this.numeroCC);
     System.out.println("Saldo Iniziale: " + this.saldoIniziale);
@@ -70,8 +67,8 @@ public class ContoCorrente {
     // Legge il saldo attuale del conto corrente
     saldoIniziale = Float.parseFloat(reader.readLine());
 
-    // Legge il proprietario del conto corrente
-    proprietario = reader.readLine();
+    // Legge il intestatario del conto corrente
+    intestatario = reader.readLine();
 
     // Legge i movimenti del conto corrente
     String line;
@@ -105,8 +102,8 @@ public class ContoCorrente {
     writer.write(Float.toString(saldoIniziale));
     writer.newLine();
 
-    // Scrive il proprietario del conto corrente
-    writer.write(proprietario);
+    // Scrive il intestatario del conto corrente
+    writer.write(intestatario);
     writer.newLine();
 
     // Scrive i movimenti del conto corrente
@@ -122,6 +119,54 @@ public class ContoCorrente {
 
     // Chiude il file
     writer.close();
+  }
+
+  public int getNumeroCC() {
+    return numeroCC;
+  }
+
+  public void setNumeroCC(int numeroCC) {
+    this.numeroCC = numeroCC;
+  }
+
+  public float getSaldoIniziale() {
+    return saldoIniziale;
+  }
+
+  public void setSaldoIniziale(float saldoIniziale) {
+    this.saldoIniziale = saldoIniziale;
+  }
+
+  public Movimento[] getMovimenti() {
+    return movimenti;
+  }
+
+  public void setMovimenti(Movimento[] movimenti) {
+    this.movimenti = movimenti;
+  }
+
+  public int getContatoreMovimenti() {
+    return contatoreMovimenti;
+  }
+
+  public void setContatoreMovimenti(int contatoreMovimenti) {
+    this.contatoreMovimenti = contatoreMovimenti;
+  }
+
+  public void setIntestatario(String intestatario) {
+    this.intestatario = intestatario;
+  }
+
+  public String getIntestatario() {
+    return this.intestatario;
+  }
+
+  public Movimento getMovimento(int i) {
+    if(i < 0 || i >= this.contatoreMovimenti) {
+      return null;
+    }
+
+    return this.movimenti[i];
   }
 }
 

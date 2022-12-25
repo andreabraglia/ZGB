@@ -1,4 +1,4 @@
-package GUI;
+package GUI.BasicComponents;
 
 import javax.swing.JButton;
 import java.awt.Color;

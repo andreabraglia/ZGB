@@ -34,8 +34,9 @@ for program in javac java; do
   fi
 done
 
+
 # Start the compilation process
-javac ${DEBUG:-} -d ${DIR:-bin} $(find . -type f -name "*.java")
+javac ${DEBUG:-} -d "${DIR:-bin}" $(find . -type f -name "*.java" -print0 | tr '\0' ' ')
 
 # Run the program
-java -cp ${DIR:-bin} Main
+java -cp "${DIR:-bin}" Main
