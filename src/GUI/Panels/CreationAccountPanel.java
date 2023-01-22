@@ -8,6 +8,8 @@ package GUI.Panels;
 //import javax.swing.JButton;
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
+import GUI.Styles.Colors;
+import GUI.Styles.Dimensions;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -22,13 +24,20 @@ public class CreationAccountPanel extends CenteredPanel {
   private JTextField intestatarioField;
 
   public CreationAccountPanel(ContoCorrente contoCorrente) {
-    super();
+    super(true);
 
     // Crea un nuovo pannello per i campi di input
     JPanel mainPanel = new JPanel();
+    mainPanel.setBackground(new Color(Colors.WHITE.getHex()));
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    mainPanel.setBorder(new LineBorder(Color.BLUE, 3));
+
     JButton createButton = new JButton("Crea conto corrente");
+    JLabel titolo = new JLabel("Crea un nuovo conto corrente");
+    Font titleFont = new Font(
+      titolo.getFont().getName(), titolo.getFont().getStyle(), Dimensions.TITLE_FONT_SIZE.getDimension()
+    );
+    titolo.setFont(titleFont);
+    mainPanel.add(titolo);
 
     // Aggiunge i campi di input per le proprietà del conto corrente
     mainPanel.add(new JLabel("Numero conto corrente:"));
@@ -42,8 +51,8 @@ public class CreationAccountPanel extends CenteredPanel {
     mainPanel.add(new JLabel("Intestatario:"));
 
     intestatarioField = new JTextField(contoCorrente.getIntestatario());
-    mainPanel.add(intestatarioField);
 
+    mainPanel.add(intestatarioField);
     mainPanel.add(createButton);
 
     // Aggiunge il pannello con i campi di input alla finestra

@@ -18,10 +18,14 @@ public class ContoCorrente {
 
   public ContoCorrente(int numeroCC, float saldoIniziale, String intestatario) {
     this.numeroCC = numeroCC;
-    this.saldoIniziale = saldoIniziale;
-    this.intestatario = intestatario;
     this.movimenti = new Movimento[100];
+    this.intestatario = intestatario;
     this.contatoreMovimenti = 0;
+
+    this.saldoIniziale = saldoIniziale;
+    if (saldoIniziale != 0) {
+      this.addMovimento(new Movimento(saldoIniziale, "Saldo iniziale", LocalDateTime.now()));
+    }
   }
 
   public float getSaldoAttuale() {
@@ -137,20 +141,8 @@ public class ContoCorrente {
     this.saldoIniziale = saldoIniziale;
   }
 
-  public Movimento[] getMovimenti() {
-    return movimenti;
-  }
-
-  public void setMovimenti(Movimento[] movimenti) {
-    this.movimenti = movimenti;
-  }
-
   public int getContatoreMovimenti() {
     return contatoreMovimenti;
-  }
-
-  public void setContatoreMovimenti(int contatoreMovimenti) {
-    this.contatoreMovimenti = contatoreMovimenti;
   }
 
   public void setIntestatario(String intestatario) {
@@ -162,11 +154,17 @@ public class ContoCorrente {
   }
 
   public Movimento getMovimento(int i) {
-    if(i < 0 || i >= this.contatoreMovimenti) {
+    if (i < 0 || i >= this.contatoreMovimenti) {
       return null;
     }
 
     return this.movimenti[i];
+  }
+
+  public boolean isEmpty() {
+    System.out.println("Intestatario: " + (this.intestatario.equals("")));
+    System.out.println("Numero CC: " + (this.numeroCC == 0));
+    return (this.intestatario.equals("") && this.numeroCC == 0);
   }
 }
 

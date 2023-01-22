@@ -224,5 +224,6 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,java,macos,visualstudiocode,webstorm+all
 
 # Custom files
-conto_corrente.txt
+conto_corrente*
+conto_corrente_data*
 bin

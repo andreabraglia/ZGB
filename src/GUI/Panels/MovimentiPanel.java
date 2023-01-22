@@ -4,6 +4,7 @@ import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.MovimentiTableModel;
 import GUI.Styles.Colors;
+import GUI.Styles.Dimensions;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -26,8 +27,13 @@ public class MovimentiPanel extends CenteredPanel {
     JLabel titolo = new JLabel(contoCorrente.getIntestatario());
     JLabel numeroConto = new JLabel(" - Numero conto: " + contoCorrente.getNumeroCC());
 
-    Font titleFont = new Font(titolo.getFont().getName(), titolo.getFont().getStyle(), 25);
-    Font subtitleFont = new Font(titolo.getFont().getName(), titolo.getFont().getStyle(), 15);
+    Font titleFont = new Font(
+      titolo.getFont().getName(), titolo.getFont().getStyle(), Dimensions.TITLE_FONT_SIZE.getDimension()
+    );
+
+    Font subtitleFont = new Font(
+      titolo.getFont().getName(), titolo.getFont().getStyle(), Dimensions.SUBTITLE_FONT_SIZE.getDimension()
+    );
 
     titolo.setFont(titleFont);
     titolo.setAlignmentX(0);

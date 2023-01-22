@@ -2,7 +2,6 @@ package GUI.Panels;
 
 import Core.ContoCorrente;
 import Core.Movimento;
-import GUI.BasicComponents.Button;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.DatePicker;
 import GUI.Styles.Colors;
@@ -10,13 +9,17 @@ import GUI.Styles.Colors;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+
+// TODO:
+//  - Aggiungi lo spacing giusto
+//  - Allinea i componenti in modo corretto
 
 public class AddMovimentoPanel extends CenteredPanel {
   private JTextField importoField;
   private JTextField descrizioneField;
 
   private DatePicker datePicker;
+
   public AddMovimentoPanel(ContoCorrente contoCorrente) {
     // Imposta il layout del pannello
     super(true);
@@ -41,7 +44,7 @@ public class AddMovimentoPanel extends CenteredPanel {
 
     // Aggiunge il campo oer la data
     JLabel dateLabel = new JLabel("Data:");
-    datePicker = new DatePicker();
+    datePicker = new DatePicker(Colors.WHITE);
     mainPanel.add(dateLabel);
     mainPanel.add(datePicker);
 
@@ -50,7 +53,12 @@ public class AddMovimentoPanel extends CenteredPanel {
     aggiungiButton.addActionListener(e -> {
       String importoStringa = importoField.getText();
       String descrizione = descrizioneField.getText();
-      LocalDateTime data = LocalDateTime.now();
+      LocalDateTime data = datePicker.getSelectedDateTime();
+
+      if(importoStringa.equals("") || descrizione.equals("")) {
+        JOptionPane.showMessageDialog(this, "Compila tutti i campi", "Errore", JOptionPane.ERROR_MESSAGE);
+        return;
+      }
 
       Movimento movimento = new Movimento(Float.parseFloat(importoStringa), descrizione, data);
 

@@ -6,16 +6,17 @@ import GUI.BasicComponents.Button;
 import GUI.Styles.Colors;
 
 import javax.swing.*;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 public class NavbarPanel extends CenteredPanel {
   JPanel mainPanel;
   JPanel currentObject;
 
   ContoCorrente contoCorrente;
-
 
   // Costruttore della classe Navbar
   public NavbarPanel(JPanel mainPanel, JPanel currentObject, ContoCorrente contoCorrente) {
@@ -25,6 +26,7 @@ public class NavbarPanel extends CenteredPanel {
     this.contoCorrente = contoCorrente;
 
     // Crea i bottoni "Elimina", "Aggiungi" e "Home"
+
     Button deleteButton = createButton("Elimina");
     Button addButton = createButton("Aggiungi");
     Button homeButton = createButton("Home");
@@ -52,6 +54,31 @@ public class NavbarPanel extends CenteredPanel {
 
   private Button createButton(String text) {
     Button button = new Button(text);
+
+    MouseListener mouseListener = new MouseAdapter() {
+      @Override
+      public void mouseEntered(MouseEvent evt) {
+        System.out.println("[DEBUG] Button: Entered");
+        Component button = evt.getComponent();
+        Font font = button.getFont();
+        Map<TextAttribute, Integer> attributes = (Map<TextAttribute, Integer>) font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        button.setFont(font.deriveFont(attributes));
+      }
+
+      @Override
+      public void mouseExited(MouseEvent evt) {
+        System.out.println("[DEBUG] Button: Exited");
+        Component button = evt.getComponent();
+        Font font = button.getFont();
+        Map<TextAttribute, ?> attributes = font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, null);
+        button.setFont(font.deriveFont(attributes));
+      }
+    };
+
+    button.addMouseListener(mouseListener);
+
     button.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -61,11 +88,18 @@ public class NavbarPanel extends CenteredPanel {
         System.out.println("[DEBUG] Panel: " + mainPanel);
         System.out.println("[DEBUG] Remove: " + currentObject);
 
+        if (contoCorrente.isEmpty() && !text.equals("Importa")) {
+          currentObject = new CreationAccountPanel(contoCorrente);
+          mainPanel.add(currentObject, BorderLayout.CENTER);
+          mainPanel.updateUI();
+          return;
+        }
+
         // Gestisce l'evento di click del bottone
         switch (text) {
           case "Elimina" -> {
             // Mostra il pannello per eliminare un elemento
-//            currentObject = new RemoveMovimentoPanel(contoCorrente);
+            // currentObject = new RemoveMovimentoPanel(contoCorrente);
             currentObject = new CenteredPanel(true);
             currentObject.add(new JLabel("Elimina"));
           }
@@ -89,12 +123,13 @@ public class NavbarPanel extends CenteredPanel {
             // Mostra il pannello per esportare un file
             currentObject = new ExportPanel(contoCorrente);
           }
-          default -> {}
+          default -> {
+          }
         }
+
 
         mainPanel.add(currentObject, BorderLayout.CENTER);
         mainPanel.updateUI();
-
       }
     });
 

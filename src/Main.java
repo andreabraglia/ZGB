@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 
 import GUI.*;
 
+import javax.swing.*;
+
 
 public class Main {
   public static void main(String[] args) {
@@ -25,43 +27,25 @@ public class Main {
     ContoCorrente cc = new ContoCorrente(123456, 1000.0f, "Mario Rossi");
 
     // Aggiunge alcuni movimenti al conto corrente
-    cc.addMovimento(new Movimento(100.0f, "Pagamento bolletta", LocalDateTime.now()));
+    cc.addMovimento(new Movimento(-100.0f, "Pagamento bolletta", LocalDateTime.now()));
+    cc.addMovimento(new Movimento(150.0f, "Addebito stipendio", LocalDateTime.now()));
     cc.addMovimento(new Movimento(-50.0f, "Prelevamento bancomat", LocalDateTime.now()));
 
     // Scrive i dati del conto corrente su file
-    try {
-      cc.writeToFile("conto_corrente.txt");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
     System.out.println("-----------------------");
 
     System.out.println("\n\n");
     System.out.println("-----------------------");
-    System.out.println("[TEST] Inizio test caricamento dati da file");
-    // Crea un nuovo conto corrente vuoto
-    ContoCorrente cc2 = new ContoCorrente(0, 0.0f, "");
-
-    // Legge i dati del conto corrente da file
-    try {
-      cc2.readFromFile("conto_corrente.txt");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    // Stampa i dati del conto corrente letto da file
-    System.out.println("Numero CC: " + cc2.getNumeroCC());
-    System.out.println("Saldo attuale: " + cc2.getSaldoAttuale());
-    System.out.println("Intestatario: " + cc2.getIntestatario());
-    for (int i = 0; i < cc2.getContatoreMovimenti(); i++) {
-      Movimento movimento = cc2.getMovimento(i);
-      System.out.println("Movimento " + i + ": " + movimento.getAmount() + " (" + movimento.getDescription() + ") " + movimento.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-    }
-
-    System.out.println("-----------------------");
 
     // Init GUI
-    MainFrame main = new MainFrame();
-    main.setVisible(true);
+    MainFrame main = new MainFrame(cc);
+    try {
+      main.setVisible(true);
+      cc.readFromFile("conto_corrente_data.dataa");
+    } catch (IOException error) {
+      JOptionPane.showMessageDialog(main, "Errore durante la scrittura dei dati su file:\n" + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+      error.printStackTrace();
+    }
   }
 }

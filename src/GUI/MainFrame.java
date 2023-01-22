@@ -1,58 +1,48 @@
 package GUI;
 
 import Core.*;
+import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.Frame;
+import GUI.Panels.CreationAccountPanel;
 import GUI.Panels.MovimentiPanel;
 import GUI.Panels.NavbarPanel;
 import GUI.Styles.Colors;
+import GUI.Styles.Dimensions;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.time.LocalDateTime;
 
 public class MainFrame extends Frame {
-  public MainFrame() {
+  public MainFrame(ContoCorrente cc) {
     super("Home", 500, 500, 300, 100);
-    // Imposta il layout del pannello utilizzando BorderLayout
+
+    // Imposta il layout del pannello
     setLayout(new BorderLayout());
 
+    Border padding = BorderFactory.createEmptyBorder(Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension());
 
-    // Dati fake
-    ContoCorrente cc = new ContoCorrente(123456, 1000.0f, "Mario Rossi");
-    cc.addMovimento(new Movimento(100.0f, "Pagamento bolletta", LocalDateTime.now()));
-    cc.addMovimento(new Movimento(-50.0f, "Prelevamento bancomat", LocalDateTime.now()));
-
-
-    int paddingValue = 5;
-    Border padding = BorderFactory.createEmptyBorder(paddingValue, paddingValue, paddingValue, paddingValue);
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
     mainPanel.setBorder(padding);
     mainPanel.setBackground(new Color(Colors.LIGHT.getHex()));
     add(mainPanel);
-    MovimentiPanel movimentiPanel = new MovimentiPanel(cc);
 
+    // Controlla se il conto corrente è vuoto
+    // e nel caso crea un nuovo pannello per la creazione di un nuovo conto
+    CenteredPanel contentPanel;
+    if(!cc.isEmpty()) {
+      contentPanel = new MovimentiPanel(cc);
+    } else {
+      contentPanel = new CreationAccountPanel(cc);
+    }
 
+    mainPanel.add(contentPanel, BorderLayout.CENTER);
 
     // Crea una navbar
-    NavbarPanel navbar = new NavbarPanel(mainPanel, movimentiPanel, cc);
-
-
-    // Dati tabella
-
+    NavbarPanel navbar = new NavbarPanel(mainPanel, contentPanel, cc);
 
     // Aggiunge la navbar al primo riquadro del pannello
     mainPanel.add(navbar, BorderLayout.WEST);
-
-    // Aggiunge la tabella al riquadro sinistro del pannello
-    // utilizzando un JScrollPane per gestire la visualizzazione delle righe
-//    if(1 == 2) {
-//      CreationAccountPanel createAccountPanel = new CreationAccountPanel();
-//      mainPanel.add(createAccountPanel, BorderLayout.CENTER);
-//    } else {
-//      mainPanel.add(movimentiPanel, BorderLayout.CENTER);
-//    }
-//    setContentPane(movimentiPanel);
   }
 }
