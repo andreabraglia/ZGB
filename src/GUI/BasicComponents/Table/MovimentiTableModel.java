@@ -22,10 +22,6 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
     this.addTableModelListener(this);
   }
 
-  public Movimento getRow(int index) {
-    return cc.getMovimento(index);
-  }
-
   @Override
   public int getRowCount() {
     return cc.getContatoreMovimenti();
@@ -60,6 +56,10 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     Movimento movimento = cc.getMovimento(rowIndex);
+    System.out.println("[DEBUG] getValueAt: " + movimento);
+    if (movimento == null) {
+      return null;
+    }
 
     if (columnIndex == 0) {
       return movimento.getAmount();

@@ -9,7 +9,7 @@ public class FileChooser {
 
   public FileChooser() {
     JFileChooser fileChooser = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("File .dat", "dat");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("File .txt o .csv", "txt", "csv");
     fileChooser.setFileFilter(filter);
     int returnValue = fileChooser.showOpenDialog(null);
     if (returnValue == JFileChooser.APPROVE_OPTION) {

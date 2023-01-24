@@ -1,11 +1,11 @@
 - [ ] Sviluppo multithread
 - [ ] Creare documentazione
 - [ ] Gestione del bilancio
-  - [ ] Mostrare somma totale
-  - [ ] Modifica voce
-    - Aggiungi voce (Default data NOW)
-    - Rimuovi voce
-    - Modifica voce
+  - [x] Mostrare somma totale
+  - [x] Modifica voce
+    - [x]  Aggiungi voce (Default data NOW)
+    - [x] Rimuovi voce
+    - [x] Modifica voce
   - [ ] Visualizza bilancio
     - Filtro per singolo giorno
     - Filtro per settimana

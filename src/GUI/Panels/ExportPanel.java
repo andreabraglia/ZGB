@@ -33,7 +33,7 @@ public class ExportPanel extends CenteredPanel  {
       event -> {
         FileChooser fileChooser = new FileChooser();
         try {
-          contoCorrente.writeToFile(fileChooser.getSelectedFile());
+          contoCorrente.writeToTXTFile(fileChooser.getSelectedFile());
         } catch (IOException error) {
           JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
           error.printStackTrace();

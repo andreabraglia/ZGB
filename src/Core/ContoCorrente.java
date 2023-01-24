@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.IntStream;
 
 
 public class ContoCorrente {
@@ -38,6 +39,12 @@ public class ContoCorrente {
   }
 
   public void addMovimento(Movimento movimento) {
+    if (this.contatoreMovimenti >= this.movimenti.length) {
+      Movimento[] newMovimenti = new Movimento[this.movimenti.length + 100];
+      IntStream.range(0, this.movimenti.length).forEach(i -> newMovimenti[i] = this.movimenti[i]);
+      this.movimenti = newMovimenti;
+    }
+
     movimenti[contatoreMovimenti] = movimento;
     contatoreMovimenti++;
   }
@@ -61,7 +68,7 @@ public class ContoCorrente {
   }
 
   // Metodo per leggere i dati del conto corrente da file
-  public void readFromFile(String fileName) throws IOException {
+  private void readFromFile(String fileName, String separator) throws IOException {
     // Apre il file in modalità di lettura
     BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
@@ -79,13 +86,18 @@ public class ContoCorrente {
     contatoreMovimenti = 0;
 
     while ((line = reader.readLine()) != null) {
-      // Divide la stringa nelle parti "amount|description|date"
-      String[] parts = line.split("\\|");
+      String[] parts = line.split("\\" + separator);
+
+      System.out.println("[DEBUG] Line: " + line);
+      for (String part : parts) {
+        System.out.println("  [DEBUG] Part:" + part);
+      }
+
       float amount = Float.parseFloat(parts[0]);
       String description = parts[1];
-      LocalDateTime date = LocalDateTime.parse(parts[2], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-      // Crea il movimento e lo aggiunge al conto corrente
+      LocalDateTime date = LocalDateTime.parse(parts[2], Movimento.FORMATTER);
       Movimento movimento = new Movimento(amount, description, date);
+
       addMovimento(movimento);
     }
 
@@ -94,7 +106,7 @@ public class ContoCorrente {
   }
 
   // Metodo per scrivere i dati del conto corrente su file
-  public void writeToFile(String fileName) throws IOException {
+  private void writeToFile(String fileName, String separator) throws IOException {
     // Apre il file in modalità di scrittura
     BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
@@ -114,15 +126,31 @@ public class ContoCorrente {
     for (int i = 0; i < contatoreMovimenti; i++) {
       Movimento movimento = movimenti[i];
       writer.write(Float.toString(movimento.getAmount()));
-      writer.write("|");
+      writer.write(separator);
       writer.write(movimento.getDescription());
-      writer.write("|");
+      writer.write(separator);
       writer.write(movimento.getDate().format(Movimento.FORMATTER));
       writer.newLine();
     }
 
     // Chiude il file
     writer.close();
+  }
+
+  public void readFromTXTFile(String filename) throws IOException {
+    this.readFromFile(filename, "|");
+  }
+
+  public void writeToTXTFile(String filename) throws IOException {
+    this.writeToFile(filename, "|");
+  }
+
+  public void readFromCSVFile(String filename) throws IOException {
+    this.readFromFile(filename, ",");
+  }
+
+  public void writeToCSVFile(String filename) throws IOException {
+    this.writeToFile(filename, ",");
   }
 
   public int getNumeroCC() {
@@ -163,6 +191,26 @@ public class ContoCorrente {
 
   public boolean isEmpty() {
     return (this.intestatario.equals("") && this.numeroCC == 0);
+  }
+
+  public boolean deleteMovimento(int index) {
+    if (index < 0 || index >= this.contatoreMovimenti) {
+      return false;
+    }
+
+    Movimento[] newMovimenti = new Movimento[this.contatoreMovimenti];
+
+    for (int i = 0; i < this.contatoreMovimenti; i++) {
+      if (i == index) {
+        continue;
+      }
+      newMovimenti[i > index ? i - 1 : i] = this.movimenti[i];
+    }
+
+    this.movimenti = newMovimenti;
+    this.contatoreMovimenti--;
+
+    return true;
   }
 }
 

@@ -30,22 +30,43 @@ public class ImportPanel extends CenteredPanel {
     mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
     JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
-    JButton importButton = new JButton("Importa");
-    importButton.addActionListener(e -> {
-      FileChooser fileChooser = new FileChooser();
 
-      try {
-        contoCorrente.readFromFile(fileChooser.getSelectedFile());
-        contoCorrente.print();
-      } catch (IOException error) {
-        JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-        error.printStackTrace();
+
+    JButton importButtonCSV = new JButton("Importa come CSV");
+    importButtonCSV.addActionListener(e -> {
+        FileChooser fileChooser = new FileChooser();
+
+        try {
+          contoCorrente.readFromCSVFile(fileChooser.getSelectedFile());
+          contoCorrente.print();
+        } catch (IOException error) {
+          JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+          error.printStackTrace();
+        }
       }
-    }
+    );
+
+    JButton importButtonTXT = new JButton("Importa come TXT");
+    importButtonTXT.addActionListener(e -> {
+        FileChooser fileChooser = new FileChooser();
+        try {
+          contoCorrente.readFromTXTFile(fileChooser.getSelectedFile());
+          contoCorrente.print();
+        } catch (IOException error) {
+          JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+          error.printStackTrace();
+        }
+      }
     );
 
     mainPanel.add(pathLabel);
-    mainPanel.add(importButton);
+
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+    buttonPanel.setBackground(new Color(Colors.WHITE.getHex()));
+    mainPanel.add(importButtonCSV);
+    mainPanel.add(importButtonTXT);
+//    mainPanel.add(buttonPanel);
 
     add(mainPanel);
   }

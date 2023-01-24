@@ -4,7 +4,6 @@ import Core.Movimento;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import GUI.*;
 
@@ -44,10 +43,14 @@ public class Main {
     try {
       main = new MainFrame(cc);
       main.setVisible(true);
-////      cc.readFromFile("conto_corrente_data.dataa");
-    } catch (ParseException error) {
+      cc.writeToTXTFile("conto_corrente.txt");
+//      cc.readFromTXTFile("conto_corrente.txt");
+
+      cc.writeToCSVFile("conto_corrente.csv");
+//      cc.readFromCSVFile("conto_corrente.csv");
+    } catch (IOException | ParseException error) {
       JOptionPane.showMessageDialog(main, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-//      error.printStackTrace();
+      error.printStackTrace();
     }
   }
 }

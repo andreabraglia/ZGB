@@ -27,8 +27,6 @@ public class NavbarPanel extends CenteredPanel {
 
     // Crea i bottoni "Elimina", "Aggiungi" e "Home"
 
-    Button deleteButton = createButton("Elimina");
-    Button addButton = createButton("Aggiungi");
     Button homeButton = createButton("Home");
     Button findButton = createButton("Cerca");
     Button importButton = createButton("Importa");
@@ -39,8 +37,6 @@ public class NavbarPanel extends CenteredPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setBackground(new Color(Colors.LIGHT.getHex()));
     panel.add(homeButton);
-    panel.add(addButton);
-    panel.add(deleteButton);
     panel.add(findButton);
     panel.add(importButton);
     panel.add(exportButton);
@@ -95,21 +91,10 @@ public class NavbarPanel extends CenteredPanel {
 
       // Gestisce l'evento di click del bottone
       switch (text) {
-        case "Elimina" -> {
-          // Mostra il pannello per eliminare un elemento
-          // currentObject = new RemoveMovimentoPanel(contoCorrente);
-          currentObject = new CenteredPanel(true);
-          currentObject.add(new JLabel("Elimina"));
-        }
-        case "Aggiungi" -> {
-          // Mostra il pannello per aggiungere un elemento
-          currentObject = new AddMovimentoPanel(contoCorrente);
-        }
         case "Home" -> {
           // Mostra il pannello principale
           try {
             currentObject = new MovimentiPanel(contoCorrente);
-
           } catch (Exception e1) {
 
             e1.printStackTrace();
