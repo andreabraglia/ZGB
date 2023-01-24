@@ -79,58 +79,61 @@ public class NavbarPanel extends CenteredPanel {
 
     button.addMouseListener(mouseListener);
 
-    button.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        System.out.println("[DEBUG] Clicked on " + text);
-        mainPanel.remove(currentObject);
+    button.addActionListener(e -> {
+      System.out.println("[DEBUG] Clicked on " + text);
+      mainPanel.remove(currentObject);
 
-        System.out.println("[DEBUG] Panel: " + mainPanel);
-        System.out.println("[DEBUG] Remove: " + currentObject);
+      System.out.println("[DEBUG] Panel: " + mainPanel);
+      System.out.println("[DEBUG] Remove: " + currentObject);
 
-        if (contoCorrente.isEmpty() && !text.equals("Importa")) {
-          currentObject = new CreationAccountPanel(contoCorrente);
-          mainPanel.add(currentObject, BorderLayout.CENTER);
-          mainPanel.updateUI();
-          return;
-        }
-
-        // Gestisce l'evento di click del bottone
-        switch (text) {
-          case "Elimina" -> {
-            // Mostra il pannello per eliminare un elemento
-            // currentObject = new RemoveMovimentoPanel(contoCorrente);
-            currentObject = new CenteredPanel(true);
-            currentObject.add(new JLabel("Elimina"));
-          }
-          case "Aggiungi" -> {
-            // Mostra il pannello per aggiungere un elemento
-            currentObject = new AddMovimentoPanel(contoCorrente);
-          }
-          case "Home" -> {
-            // Mostra il pannello principale
-            currentObject = new MovimentiPanel(contoCorrente);
-          }
-          case "Cerca" -> {
-            // Mostra il pannello per cercare un elemento
-            currentObject = new FindMovimentoPanel(contoCorrente);
-          }
-          case "Importa" -> {
-            // Mostra il pannello per importare un file
-            currentObject = new ImportPanel(contoCorrente);
-          }
-          case "Esporta" -> {
-            // Mostra il pannello per esportare un file
-            currentObject = new ExportPanel(contoCorrente);
-          }
-          default -> {
-          }
-        }
-
-
+      if (contoCorrente.isEmpty() && !text.equals("Importa")) {
+        currentObject = new CreationAccountPanel(contoCorrente);
         mainPanel.add(currentObject, BorderLayout.CENTER);
         mainPanel.updateUI();
+        return;
       }
+
+      // Gestisce l'evento di click del bottone
+      switch (text) {
+        case "Elimina" -> {
+          // Mostra il pannello per eliminare un elemento
+          // currentObject = new RemoveMovimentoPanel(contoCorrente);
+          currentObject = new CenteredPanel(true);
+          currentObject.add(new JLabel("Elimina"));
+        }
+        case "Aggiungi" -> {
+          // Mostra il pannello per aggiungere un elemento
+          currentObject = new AddMovimentoPanel(contoCorrente);
+        }
+        case "Home" -> {
+          // Mostra il pannello principale
+          try {
+            currentObject = new MovimentiPanel(contoCorrente);
+
+          } catch (Exception e1) {
+
+            e1.printStackTrace();
+          }
+        }
+        case "Cerca" -> {
+          // Mostra il pannello per cercare un elemento
+          currentObject = new FindMovimentoPanel(contoCorrente);
+        }
+        case "Importa" -> {
+          // Mostra il pannello per importare un file
+          currentObject = new ImportPanel(contoCorrente);
+        }
+        case "Esporta" -> {
+          // Mostra il pannello per esportare un file
+          currentObject = new ExportPanel(contoCorrente);
+        }
+        default -> {
+        }
+      }
+
+
+      mainPanel.add(currentObject, BorderLayout.CENTER);
+      mainPanel.updateUI();
     });
 
     return button;

@@ -2,6 +2,7 @@ import Core.ContoCorrente;
 import Core.Movimento;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -39,13 +40,14 @@ public class Main {
     System.out.println("-----------------------");
 
     // Init GUI
-    MainFrame main = new MainFrame(cc);
+    MainFrame main = null;
     try {
+      main = new MainFrame(cc);
       main.setVisible(true);
-      cc.readFromFile("conto_corrente_data.dataa");
-    } catch (IOException error) {
-      JOptionPane.showMessageDialog(main, "Errore durante la scrittura dei dati su file:\n" + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-      error.printStackTrace();
+////      cc.readFromFile("conto_corrente_data.dataa");
+    } catch (ParseException error) {
+      JOptionPane.showMessageDialog(main, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+//      error.printStackTrace();
     }
   }
 }

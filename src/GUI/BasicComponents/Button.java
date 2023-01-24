@@ -1,8 +1,7 @@
 package GUI.BasicComponents;
 
 import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 public class Button extends JButton {
   public Button(String text) {
@@ -19,5 +18,7 @@ public class Button extends JButton {
 
     // Imposta il tipo di carattere del testo del bottone
     setFont(new Font("Arial", Font.BOLD, 16));
+
+    setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
   }
 }

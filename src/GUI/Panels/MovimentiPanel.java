@@ -2,16 +2,18 @@ package GUI.Panels;
 
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
-import GUI.MovimentiTableModel;
+import GUI.BasicComponents.Table.DateCellEditor;
+import GUI.BasicComponents.Table.MovimentiTableModel;
 import GUI.Styles.Colors;
 import GUI.Styles.Dimensions;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.text.ParseException;
 
 public class MovimentiPanel extends CenteredPanel {
-  public MovimentiPanel(ContoCorrente contoCorrente) {
+  public MovimentiPanel(ContoCorrente contoCorrente) throws ParseException {
     super(true);
 
     // Crea un nuovo pannello per i campi di input
@@ -53,9 +55,15 @@ public class MovimentiPanel extends CenteredPanel {
     mainPanel.add(saldo);
 
     JTable table = new JTable(new MovimentiTableModel(contoCorrente, saldo));
+
+    TableColumn dateColumn = table.getColumnModel().getColumn(2);
+//    dateColumn.setCellRenderer(new DateCell());
+    dateColumn.setCellEditor(new DateCellEditor());
+
     TableColumn importoColumn = table.getColumnModel().getColumn(0);
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
 
     importoColumn.setPreferredWidth((int) (table.getPreferredSize().width / 2.5));
     importoColumn.setCellRenderer(centerRenderer);

@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 //  - Allinea i componenti in modo corretto
 
 public class AddMovimentoPanel extends CenteredPanel {
-  private JTextField importoField;
-  private JTextField descrizioneField;
+  private final JTextField importoField;
 
-  private DatePicker datePicker;
+  private final JTextField descrizioneField;
+
+  private final DatePicker datePicker;
 
   public AddMovimentoPanel(ContoCorrente contoCorrente) {
     // Imposta il layout del pannello

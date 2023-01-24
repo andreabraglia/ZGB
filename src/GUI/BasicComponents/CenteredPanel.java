@@ -4,7 +4,6 @@ import GUI.Styles.Colors;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.border.*;
 import java.awt.*;
 
 public class CenteredPanel extends JPanel {

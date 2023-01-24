@@ -117,7 +117,7 @@ public class ContoCorrente {
       writer.write("|");
       writer.write(movimento.getDescription());
       writer.write("|");
-      writer.write(movimento.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+      writer.write(movimento.getDate().format(Movimento.FORMATTER));
       writer.newLine();
     }
 
@@ -162,8 +162,6 @@ public class ContoCorrente {
   }
 
   public boolean isEmpty() {
-    System.out.println("Intestatario: " + (this.intestatario.equals("")));
-    System.out.println("Numero CC: " + (this.numeroCC == 0));
     return (this.intestatario.equals("") && this.numeroCC == 0);
   }
 }

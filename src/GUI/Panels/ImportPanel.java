@@ -31,20 +31,17 @@ public class ImportPanel extends CenteredPanel {
 
     JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
     JButton importButton = new JButton("Importa");
-    importButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        FileChooser fileChooser = new FileChooser();
+    importButton.addActionListener(e -> {
+      FileChooser fileChooser = new FileChooser();
 
-        try {
-          contoCorrente.readFromFile(fileChooser.getSelectedFile());
-          contoCorrente.print();
-        } catch (IOException error) {
-          JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-          error.printStackTrace();
-        }
+      try {
+        contoCorrente.readFromFile(fileChooser.getSelectedFile());
+        contoCorrente.print();
+      } catch (IOException error) {
+        JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+        error.printStackTrace();
       }
-     }
+    }
     );
 
     mainPanel.add(pathLabel);

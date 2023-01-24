@@ -14,11 +14,11 @@ import javax.swing.SpinnerNumberModel;
 
 public class DatePicker extends JPanel {
 
-  private JComboBox<Integer> yearComboBox;
-  private JComboBox<Integer> monthComboBox;
-  private JComboBox<Integer> dayComboBox;
-  private JSpinner hourSpinner;
-  private JSpinner minuteSpinner;
+  private final JComboBox<Integer> yearComboBox;
+  private final JComboBox<Integer> monthComboBox;
+  private final JComboBox<Integer> dayComboBox;
+  private final JSpinner hourSpinner;
+  private final JSpinner minuteSpinner;
 
   public DatePicker(Colors bgColor) {
     setLayout(new GridLayout(3, 2));
@@ -66,10 +66,13 @@ public class DatePicker extends JPanel {
     add(minuteSpinner);
   }
 
-  public LocalDate getSelectedDate() {
-    return LocalDate.of((Integer) yearComboBox.getSelectedItem(),
-      (Integer) monthComboBox.getSelectedItem(),
-      (Integer) dayComboBox.getSelectedItem());
+  public LocalDate getSelectedDate() throws NullPointerException {
+
+    return (
+      LocalDate.of((Integer) yearComboBox.getSelectedItem(),
+        (Integer) monthComboBox.getSelectedItem(),
+        (Integer) dayComboBox.getSelectedItem())
+    );
   }
 
   public LocalTime getSelectedTime() {
@@ -80,16 +83,4 @@ public class DatePicker extends JPanel {
   public LocalDateTime getSelectedDateTime() {
     return LocalDateTime.of(getSelectedDate(), getSelectedTime());
   }
-
-  public void setSelectedDate(LocalDate date) {
-    yearComboBox.setSelectedItem(date.getYear());
-    monthComboBox.setSelectedItem(date.getMonthValue());
-    dayComboBox.setSelectedItem(date.getDayOfMonth());
-  }
-
-  public void setSelectedTime(LocalTime time) {
-    hourSpinner.setValue(time.getHour());
-    minuteSpinner.setValue(time.getMinute());
-  }
-
 }

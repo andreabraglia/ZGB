@@ -1,84 +1,107 @@
 package Core;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Classe Transazione.
  */
 public class Movimento {
-    /**
-     * Importo della transazione
-     */
-    private float amount;
+  /**
+   * Importo della transazione
+   */
+  private float amount;
 
-    /**
-     * Descrizione della transazione
-     */
-    private String description;
-    /**
-     * Data della transazione
-     */
-    private LocalDateTime date;
+  /**
+   * Descrizione della transazione
+   */
+  private String description;
+  /**
+   * Data della transazione
+   */
+  private LocalDateTime date;
 
-    /**
-     * Costruttore della classe Transazione
-     *
-     * @param amount      Importo della transazione
-     * @param description Descrizione della transazione
-     * @param date        Data della transazione
-     */
-    public Movimento(float amount, String description, LocalDateTime date) {
-        this.amount = amount;
-        this.description = description;
-        this.date = date;
-    }
+  /**
+   * Formattatore della data
+   */
+  public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+  public static String DATE_FORMAT = "dd/MM/yyyy HH:mm";
+  public static String MASK_DATE_FORMAT = "##/##/#### ##:##";
 
-    /**
-     * Restituisce l'importo della transazione
-     *
-     * @return amount
-     */
-    public float getAmount() {
-        return amount;
-    }
+  /**
+   * Costruttore della classe Transazione
+   *
+   * @param amount      Importo della transazione
+   * @param description Descrizione della transazione
+   * @param date        Data della transazione
+   */
+  public Movimento(float amount, String description, LocalDateTime date) {
+    this.amount = amount;
+    this.description = description;
+    this.date = date;
+  }
 
-    /**
-     * Restituisce la descrizione della transazione.
-     *
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
+  /**
+   * Restituisce l'importo della transazione
+   *
+   * @return amount
+   */
+  public float getAmount() {
+    return amount;
+  }
 
-    /**
-     * Gets date.
-     *
-     * @return the date
-     */
-    public LocalDateTime getDate() {
-        return date;
-    }
+  /**
+   * Restituisce la descrizione della transazione.
+   *
+   * @return the description
+   */
+  public String getDescription() {
+    return description;
+  }
 
-    /**
-     * Restituisce una stringa che rappresenta la transazione
-     *
-     * @return Stringa che rappresenta l'oggetto.
-     */
-    public String toString() {
-        return String.format("Amount: %s\nDescription: %s\nDate: %s", amount, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
-    }
+  /**
+   * Gets date.
+   *
+   * @return the date
+   */
+  public LocalDateTime getDate() {
+    return date;
+  }
+
+  /**
+   * Restituisce una stringa che rappresenta la transazione
+   *
+   * @return Stringa che rappresenta l'oggetto.
+   */
+  public String toString() {
+    return String.format("Amount: %s\nDescription: %s\nDate: %s", amount, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
+  }
 
 
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
+  /**
+   * Restituisce una stringa che rappresenta la transazione
+   *
+   * @return Stringa che rappresenta l'oggetto.
+   */
+  public void setAmount(float amount) {
+    this.amount = amount;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  /**
+   * Setta la descrizione del movimento.
+   *
+   * @param description the description
+   */
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+  /**
+   * Setta la data del movimento.
+   *
+   * @param date the date
+   */
+  public void setDate(LocalDateTime date) {
+    this.date = date;
+  }
 }

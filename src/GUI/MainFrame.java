@@ -12,9 +12,10 @@ import GUI.Styles.Dimensions;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.text.ParseException;
 
 public class MainFrame extends Frame {
-  public MainFrame(ContoCorrente cc) {
+  public MainFrame(ContoCorrente cc) throws ParseException {
     super("Home", 500, 500, 300, 100);
 
     // Imposta il layout del pannello

@@ -1,27 +1,23 @@
 package GUI.Panels;
 
-
-//import javax.swing.JPanel;
-//import javax.swing.JLabel;
-//import javax.swing.JTextField;
-//import javax.swing.BoxLayout;
-//import javax.swing.JButton;
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.Styles.Colors;
 import GUI.Styles.Dimensions;
 
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
 
 public class CreationAccountPanel extends CenteredPanel {
   // Campi di input per le proprietà del conto corrente
-  private JTextField numeroCCField;
-  private JTextField saldoAttualeField;
-  private JTextField intestatarioField;
+  private final JTextField numeroCCField;
+
+  private final JTextField saldoAttualeField;
+
+  private final JTextField intestatarioField;
+
 
   public CreationAccountPanel(ContoCorrente contoCorrente) {
     super(true);

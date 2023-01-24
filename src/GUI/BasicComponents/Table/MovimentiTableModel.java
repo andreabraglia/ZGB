@@ -1,4 +1,4 @@
-package GUI;
+package GUI.BasicComponents.Table;
 
 import Core.*;
 
@@ -45,9 +45,11 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
   public Class<?> getColumnClass(int columnIndex) {
     if (columnIndex == 0) {
       return Float.class;
-    } else {
-      return String.class;
+    } else if (columnIndex == 2) {
+      return LocalDateTime.class;
     }
+
+    return String.class;
   }
 
   @Override
@@ -64,7 +66,7 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
     } else if (columnIndex == 1) {
       return movimento.getDescription();
     } else {
-      return movimento.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+      return movimento.getDate().format(Movimento.FORMATTER);
     }
   }
 
@@ -83,7 +85,7 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
       }
       case 2 -> {
         // Data
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formatter = Movimento.FORMATTER;
         movimento.setDate(LocalDateTime.parse((String) value, formatter));
       }
       default -> {

@@ -3,10 +3,6 @@ package GUI.BasicComponents;
 import javax.swing.*;
 
 public class Frame extends JFrame {
-  public Frame() {
-    this("");
-  }
-
   public Frame(String title, Integer... optSettings) {
     super(title);
 
