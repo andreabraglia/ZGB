@@ -6,11 +6,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 
 public class DatePicker extends JPanel {
 
@@ -21,7 +17,10 @@ public class DatePicker extends JPanel {
   private final JSpinner minuteSpinner;
 
   public DatePicker(Colors bgColor) {
-    setLayout(new GridLayout(3, 2));
+    GridLayout layout = new GridLayout(3, 2);
+    layout.setHgap(10);
+    layout.setVgap(10);
+    setLayout(layout);
     setBackground(new Color(bgColor.getHex()));
 
     // Crea una selezione di anni
@@ -66,6 +65,9 @@ public class DatePicker extends JPanel {
     add(monthComboBox);
     add(new JLabel("Giorno:"));
     add(dayComboBox);
+
+    add(new JLabel(""));
+    add(new JLabel(""));
     add(new JLabel("Ora:"));
     add(hourSpinner);
     add(new JLabel("Minuti:"));

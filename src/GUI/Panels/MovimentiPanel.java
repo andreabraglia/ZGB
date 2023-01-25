@@ -15,6 +15,8 @@ import java.awt.font.TextAttribute;
 import java.text.ParseException;
 import java.util.Collections;
 
+import static GUI.Styles.Dimensions.GAP;
+
 public class MovimentiPanel extends CenteredPanel {
   public MovimentiPanel(ContoCorrente contoCorrente) throws ParseException {
     super(true);
@@ -59,7 +61,7 @@ public class MovimentiPanel extends CenteredPanel {
 
     mainPanel.add(header);
     mainPanel.add(new JSeparator(JSeparator.HORIZONTAL));
-    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
 
 
     JTable table = new JTable(new MovimentiTableModel(contoCorrente, saldo));

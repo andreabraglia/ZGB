@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static GUI.Styles.Dimensions.GAP;
+
 public class ImportPanel extends CenteredPanel {
   public ImportPanel(ContoCorrente contoCorrente) {
     super(true);
@@ -27,7 +29,7 @@ public class ImportPanel extends CenteredPanel {
     titolo.setFont(titleFont);
 
     mainPanel.add(titolo);
-    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
 
     JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
 

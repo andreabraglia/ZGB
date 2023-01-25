@@ -15,10 +15,7 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-// TODO:
-//  - Aggiungi lo spacing giusto
-//  - Allinea i componenti in modo corretto
+import static GUI.Styles.Dimensions.GAP;
 
 public class AddMovimentoPanel extends CenteredPanel {
   private final JTextField importoField;
@@ -37,7 +34,11 @@ public class AddMovimentoPanel extends CenteredPanel {
     mainPanel.setBackground(new Color(Colors.WHITE.getHex()));
     mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+    Component gap = Box.createRigidArea(new Dimension(0, GAP.getDimension() * 2));
+
     // Aggiunge la label "Importo"
+    JPanel importoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    importoPanel.setBackground(new Color(Colors.WHITE.getHex()));
     JLabel importoLabel = new JLabel("Importo:");
     importoField = new JTextField(10);
     ((AbstractDocument) importoField.getDocument()).setDocumentFilter(new DocumentFilter() {
@@ -54,23 +55,25 @@ public class AddMovimentoPanel extends CenteredPanel {
       }
     });
 
-    importoLabel.setAlignmentX(LEFT_ALIGNMENT);
-    mainPanel.add(importoLabel);
+    importoPanel.add(importoLabel);
+    mainPanel.add(importoPanel);
     mainPanel.add(importoField);
 
 
     // Aggiunge il campo per la descrizione
+    JPanel descrizionePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    descrizionePanel.setBackground(new Color(Colors.WHITE.getHex()));
     JLabel descrizioneLabel = new JLabel("Descrizione:");
     descrizioneField = new JTextField(20);
-    descrizioneLabel.setAlignmentX(LEFT_ALIGNMENT);
-    descrizioneLabel.setBackground(new Color(Colors.DANGER.getHex()));
-    mainPanel.add(descrizioneLabel);
+
+    descrizionePanel.add(descrizioneLabel);
+    mainPanel.add(descrizionePanel);
     mainPanel.add(descrizioneField);
 
-    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+    mainPanel.add(gap);
+
     // Aggiunge il campo oer la data
     datePicker = new DatePicker(Colors.WHITE);
-    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
     mainPanel.add(datePicker);
 
     // Aggiunge il bottone "Aggiungi movimento"
@@ -96,6 +99,7 @@ public class AddMovimentoPanel extends CenteredPanel {
       parent.setVisible(false);
     });
 
+    mainPanel.add(gap);
     mainPanel.add(aggiungiButton);
     add(mainPanel);
   }

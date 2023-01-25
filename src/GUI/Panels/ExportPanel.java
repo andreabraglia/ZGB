@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+import static GUI.Styles.Dimensions.GAP;
+
 public class ExportPanel extends CenteredPanel  {
   public ExportPanel(ContoCorrente contoCorrente) {
     super(true);
@@ -25,7 +27,7 @@ public class ExportPanel extends CenteredPanel  {
     titolo.setFont(titleFont);
 
     mainPanel.add(titolo);
-    mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
 
     JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
     JButton importButton = new JButton("Esporta");

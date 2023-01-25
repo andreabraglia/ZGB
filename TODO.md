@@ -23,8 +23,8 @@
     all’utente di continuare la ricerca per evidenziare man mano le celle/righe successive che rispondono ai
     requisiti (ad esempio, tramite un bottone “successivo”, o usando lo stesso bottone della ricerca).
 - [ ] Esportazione del bilancio
-  - [ ] Esportazione in formato CSV
-  - [ ] Esportazione in formato TXT (formato testo, in cui ogni voce è rappresentata da una riga in un file, e ogni elemento della voce è
+  - [x] Esportazione in formato CSV
+  - [x] Esportazione in formato TXT (formato testo, in cui ogni voce è rappresentata da una riga in un file, e ogni elemento della voce è
     separato da un separatore ad esempio, spazio o tabulazione)
   - [ ] Si dia all’utente la possibilità di stampare il bilancio. Si sfruttino le classi di libreria Java
      per stampare tramite una delle stampanti configurate dal sistema operativo
