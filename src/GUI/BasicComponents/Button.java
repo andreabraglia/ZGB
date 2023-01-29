@@ -2,6 +2,11 @@ package GUI.BasicComponents;
 
 import javax.swing.JButton;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 public class Button extends JButton {
   public Button(String text) {
@@ -20,5 +25,29 @@ public class Button extends JButton {
     setFont(new Font("Arial", Font.BOLD, 16));
 
     setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+    MouseListener mouseListener = new MouseAdapter() {
+      @Override
+      public void mouseEntered(MouseEvent evt) {
+        System.out.println("[DEBUG] Button: Entered");
+        Component button = evt.getComponent();
+        Font font = button.getFont();
+        Map<TextAttribute, Integer> attributes = (Map<TextAttribute, Integer>) font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        button.setFont(font.deriveFont(attributes));
+      }
+
+      @Override
+      public void mouseExited(MouseEvent evt) {
+        System.out.println("[DEBUG] Button: Exited");
+        Component button = evt.getComponent();
+        Font font = button.getFont();
+        Map<TextAttribute, ?> attributes = font.getAttributes();
+        attributes.put(TextAttribute.UNDERLINE, null);
+        button.setFont(font.deriveFont(attributes));
+      }
+    };
+
+    addMouseListener(mouseListener);
   }
 }

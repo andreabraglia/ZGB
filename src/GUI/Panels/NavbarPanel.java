@@ -3,14 +3,12 @@ package GUI.Panels;
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.Button;
+import GUI.BasicComponents.Panel;
 import GUI.Styles.Colors;
 
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.font.TextAttribute;
-import java.util.Map;
 
 public class NavbarPanel extends CenteredPanel {
   JPanel mainPanel;
@@ -33,9 +31,8 @@ public class NavbarPanel extends CenteredPanel {
     Button exportButton = createButton("Esporta");
 
     // Crea un pannello in cui verranno inseriti i bottoni
-    JPanel panel = new JPanel();
+    Panel panel = new Panel(Colors.LIGHT);
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    panel.setBackground(new Color(Colors.LIGHT.getHex()));
     panel.add(homeButton);
     panel.add(findButton);
     panel.add(importButton);
@@ -50,30 +47,6 @@ public class NavbarPanel extends CenteredPanel {
 
   private Button createButton(String text) {
     Button button = new Button(text);
-
-    MouseListener mouseListener = new MouseAdapter() {
-      @Override
-      public void mouseEntered(MouseEvent evt) {
-        System.out.println("[DEBUG] Button: Entered");
-        Component button = evt.getComponent();
-        Font font = button.getFont();
-        Map<TextAttribute, Integer> attributes = (Map<TextAttribute, Integer>) font.getAttributes();
-        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        button.setFont(font.deriveFont(attributes));
-      }
-
-      @Override
-      public void mouseExited(MouseEvent evt) {
-        System.out.println("[DEBUG] Button: Exited");
-        Component button = evt.getComponent();
-        Font font = button.getFont();
-        Map<TextAttribute, ?> attributes = font.getAttributes();
-        attributes.put(TextAttribute.UNDERLINE, null);
-        button.setFont(font.deriveFont(attributes));
-      }
-    };
-
-    button.addMouseListener(mouseListener);
 
     button.addActionListener(e -> {
       System.out.println("[DEBUG] Clicked on " + text);

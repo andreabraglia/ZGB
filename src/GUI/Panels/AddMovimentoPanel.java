@@ -4,6 +4,7 @@ import Core.ContoCorrente;
 import Core.Movimento;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.DatePicker;
+import GUI.BasicComponents.Panel;
 import GUI.Styles.Colors;
 
 import javax.swing.*;
@@ -29,16 +30,14 @@ public class AddMovimentoPanel extends CenteredPanel {
     super(false);
 
     // Crea un nuovo pannello per i campi di input
-    JPanel mainPanel = new JPanel();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    mainPanel.setBackground(new Color(Colors.WHITE.getHex()));
+    Panel mainPanel = new Panel(Colors.WHITE, true);
     mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
     Component gap = Box.createRigidArea(new Dimension(0, GAP.getDimension() * 2));
 
     // Aggiunge la label "Importo"
-    JPanel importoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    importoPanel.setBackground(new Color(Colors.WHITE.getHex()));
+    Panel importoPanel = new Panel(Colors.WHITE);
+    importoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     JLabel importoLabel = new JLabel("Importo:");
     importoField = new JTextField(10);
     ((AbstractDocument) importoField.getDocument()).setDocumentFilter(new DocumentFilter() {
@@ -61,8 +60,9 @@ public class AddMovimentoPanel extends CenteredPanel {
 
 
     // Aggiunge il campo per la descrizione
-    JPanel descrizionePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    descrizionePanel.setBackground(new Color(Colors.WHITE.getHex()));
+    Panel descrizionePanel = new Panel(Colors.WHITE);
+    descrizionePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
     JLabel descrizioneLabel = new JLabel("Descrizione:");
     descrizioneField = new JTextField(20);
 

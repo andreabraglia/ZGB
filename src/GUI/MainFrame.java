@@ -3,6 +3,7 @@ package GUI;
 import Core.*;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.Frame;
+import GUI.BasicComponents.Panel;
 import GUI.Panels.CreationAccountPanel;
 import GUI.Panels.MovimentiPanel;
 import GUI.Panels.NavbarPanel;
@@ -14,6 +15,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.text.ParseException;
 
+
 public class MainFrame extends Frame {
   public MainFrame(ContoCorrente cc) throws ParseException {
     super("Home", 500, 500, 300, 100);
@@ -23,16 +25,14 @@ public class MainFrame extends Frame {
 
     Border padding = BorderFactory.createEmptyBorder(Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension());
 
-    JPanel mainPanel = new JPanel();
-    mainPanel.setLayout(new BorderLayout());
+    Panel mainPanel = new Panel(Colors.LIGHT, new BorderLayout());
     mainPanel.setBorder(padding);
-    mainPanel.setBackground(new Color(Colors.LIGHT.getHex()));
     add(mainPanel);
 
     // Controlla se il conto corrente è vuoto
     // e nel caso crea un nuovo pannello per la creazione di un nuovo conto
     CenteredPanel contentPanel;
-    if(!cc.isEmpty()) {
+    if (!cc.isEmpty()) {
       contentPanel = new MovimentiPanel(cc);
     } else {
       contentPanel = new CreationAccountPanel(cc);

@@ -2,6 +2,7 @@ package GUI.Panels;
 
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
+import GUI.BasicComponents.Panel;
 import GUI.Styles.Colors;
 import GUI.Styles.Dimensions;
 
@@ -23,9 +24,7 @@ public class CreationAccountPanel extends CenteredPanel {
     super(true);
 
     // Crea un nuovo pannello per i campi di input
-    JPanel mainPanel = new JPanel();
-    mainPanel.setBackground(new Color(Colors.WHITE.getHex()));
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    Panel mainPanel = new Panel(Colors.WHITE, true);
 
     JButton createButton = new JButton("Crea conto corrente");
     JLabel titolo = new JLabel("Crea un nuovo conto corrente");

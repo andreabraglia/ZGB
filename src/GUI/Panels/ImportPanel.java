@@ -3,13 +3,12 @@ package GUI.Panels;
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.FileChooser;
+import GUI.BasicComponents.Panel;
 import GUI.Styles.Colors;
 import GUI.Styles.Dimensions;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import static GUI.Styles.Dimensions.GAP;
@@ -18,9 +17,7 @@ public class ImportPanel extends CenteredPanel {
   public ImportPanel(ContoCorrente contoCorrente) {
     super(true);
 
-    JPanel mainPanel = new JPanel();
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    mainPanel.setBackground(new Color(Colors.WHITE.getHex()));
+    Panel mainPanel = new Panel(Colors.WHITE, true);
 
     JLabel titolo = new JLabel("Importa conto corrente da file");
     Font titleFont = new Font(
@@ -63,13 +60,11 @@ public class ImportPanel extends CenteredPanel {
 
     mainPanel.add(pathLabel);
 
-    JPanel buttonPanel = new JPanel();
-    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-    buttonPanel.setBackground(new Color(Colors.WHITE.getHex()));
-    mainPanel.add(importButtonCSV);
-    mainPanel.add(importButtonTXT);
-//    mainPanel.add(buttonPanel);
+    Panel buttonPanel = new Panel(Colors.WHITE, true);
+    buttonPanel.add(importButtonCSV);
+    buttonPanel.add(importButtonTXT);
 
+    mainPanel.add(buttonPanel);
     add(mainPanel);
   }
 }

@@ -2,6 +2,7 @@ package GUI.Panels;
 
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
+import GUI.BasicComponents.Panel;
 import GUI.BasicComponents.Table.DateCellEditor;
 import GUI.BasicComponents.Table.MovimentiTableModel;
 import GUI.Styles.Colors;
@@ -22,14 +23,9 @@ public class MovimentiPanel extends CenteredPanel {
     super(true);
 
     // Crea un nuovo pannello per i campi di input
-    JPanel mainPanel = new JPanel();
-    mainPanel.setBackground(new Color(Colors.WHITE.getHex()));
-    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    Panel mainPanel = new Panel(Colors.WHITE, true);
 
-    JPanel header = new JPanel();
-
-    header.setBackground(new Color(Colors.WHITE.getHex()));
-    header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
+    Panel header = new Panel(Colors.WHITE, true);
 
     JLabel titolo = new JLabel(contoCorrente.getIntestatario());
     JLabel numeroConto = new JLabel(" - Numero conto: " + contoCorrente.getNumeroCC());
@@ -79,9 +75,8 @@ public class MovimentiPanel extends CenteredPanel {
     JScrollPane scrollPane = new JScrollPane(table);
     mainPanel.add(scrollPane);
 
-    JPanel buttonsPanel = new JPanel();
+    Panel buttonsPanel = new Panel(Colors.WHITE);
     buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
-    buttonsPanel.setBackground(new Color(Colors.WHITE.getHex()));
 
     Button addMovimentoButton = new Button("Aggiungi");
     addMovimentoButton.addActionListener(e -> {
@@ -94,10 +89,9 @@ public class MovimentiPanel extends CenteredPanel {
       frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
       frame.setResizable(false);
 
-      JPanel panel = new JPanel();
+      Panel panel = new Panel(Colors.WHITE);
       Border padding = BorderFactory.createEmptyBorder(Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension(), Dimensions.PADDING.getDimension());
       panel.setBorder(padding);
-      panel.setBackground(new Color(Colors.WHITE.getHex()));
       panel.add(new AddMovimentoPanel(contoCorrente, table, frame));
 
       frame.add(panel);

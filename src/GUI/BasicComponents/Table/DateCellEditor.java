@@ -13,12 +13,10 @@ public class DateCellEditor extends DefaultCellEditor {
   @Serial
   private static final long serialVersionUID = 1L;
   private final JFormattedTextField ftf;
-//  private DateTimeFormatter formatter;
 
   public DateCellEditor() throws ParseException {
     super(new JFormattedTextField());
     ftf = (JFormattedTextField) getComponent();
-//    DateFormat format = new SimpleDateFormat(Movimento.DATE_FORMAT);
     MaskFormatter dateMask = new MaskFormatter(Movimento.MASK_DATE_FORMAT);
     DefaultFormatterFactory dateMaskFormat = new DefaultFormatterFactory(dateMask);
 
