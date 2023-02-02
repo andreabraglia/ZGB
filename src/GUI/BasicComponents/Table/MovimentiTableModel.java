@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MovimentiTableModel extends AbstractTableModel implements TableModelListener {
-  private final String[] columnNames = { "Importo", "Descrizione", "Data" };
+  private static final String[] columnNames = { "Importo", "Descrizione", "Data" };
 
   private final JLabel totalAmountLabel;
 
@@ -111,5 +111,9 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
 
     // Aggiorna il label con l'importo totale
     totalAmountLabel.setText("Importo totale: " + totalAmount + "€");
+  }
+
+  public static int getColumnIndex(String rowName) {
+    return java.util.Arrays.asList(columnNames).indexOf(rowName);
   }
 }

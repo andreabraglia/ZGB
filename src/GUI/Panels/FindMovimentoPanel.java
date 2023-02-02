@@ -26,7 +26,9 @@ public class FindMovimentoPanel extends CenteredPanel {
     JLabel totalAmountLabel = new JLabel("Total Amount: " + contoCorrente.getSaldoAttuale());
     JTable table = new JTable(new MovimentiTableModel(contoCorrente, totalAmountLabel));
     TableFilter filter = new TableFilter(table);
-    filter.filterByString("Pagamento");
+//    filter.filterByMonth("02");
+//    filter.filterByYear("2021");
+//    filter.filterByDay("1");
 
     JScrollPane scrollPane = new JScrollPane(table);
     mainPanel.add(scrollPane);
@@ -48,10 +50,10 @@ public class FindMovimentoPanel extends CenteredPanel {
       }
 
       switch (selectedOption) {
-        case "Anno" -> filter.filterByYear();
-        case "Mese" -> filter.filterByMonth();
-        case "Giorno" -> filter.filterByDay();
-        case "Data" -> filter.filterByDate();
+//        case "Anno" -> filter.filterByYear();
+//        case "Mese" -> filter.filterByMonth();
+//        case "Giorno" -> filter.filterByDay();
+//        case "Data" -> filter.filterByDate();
         default -> filter.filterByString("");
       }
       System.out.println("Il valore è: " + selectedOption);
@@ -60,6 +62,8 @@ public class FindMovimentoPanel extends CenteredPanel {
 
     filterPanel.add(select);
     filterPanel.add(filterInput);
+
+    add(filterPanel);
 
     add(mainPanel);
   }

@@ -41,13 +41,13 @@ public class Main {
     // Init GUI
     MainFrame main = null;
     try {
+      cc.readFromCSVFile("conto_corrente.csv");
       main = new MainFrame(cc);
       main.setVisible(true);
-      cc.writeToTXTFile("conto_corrente.txt");
+//      cc.writeToTXTFile("conto_corrente.txt");
 //      cc.readFromTXTFile("conto_corrente.txt");
 
-      cc.writeToCSVFile("conto_corrente.csv");
-//      cc.readFromCSVFile("conto_corrente.csv");
+//      cc.writeToCSVFile("conto_corrente.csv");
     } catch (IOException | ParseException error) {
       JOptionPane.showMessageDialog(main, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
       error.printStackTrace();

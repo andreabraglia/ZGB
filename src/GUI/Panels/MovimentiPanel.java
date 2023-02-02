@@ -22,7 +22,6 @@ public class MovimentiPanel extends CenteredPanel {
   public MovimentiPanel(ContoCorrente contoCorrente) throws ParseException {
     super(true);
 
-    // Crea un nuovo pannello per i campi di input
     Panel mainPanel = new Panel(Colors.WHITE, true);
 
     Panel header = new Panel(Colors.WHITE, true);
