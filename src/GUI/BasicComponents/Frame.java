@@ -6,8 +6,8 @@ public class Frame extends JFrame {
   public Frame(String title, Integer... optSettings) {
     super(title);
 
-    int w = optSettings.length == 1 && optSettings[0] != 0 ? optSettings[0] : 600;
-    int h = optSettings.length == 2 && optSettings[1] != 0 ? optSettings[1] : 600;
+    int w = optSettings.length == 1 && optSettings[0] != 0 ? optSettings[0] : 650;
+    int h = optSettings.length == 2 && optSettings[1] != 0 ? optSettings[1] : 650;
     int x = optSettings.length == 3 && optSettings[2] != 0 ? optSettings[1] : 400;
     int y = optSettings.length == 4 && optSettings[3] != 0 ? optSettings[1] : 200;
 

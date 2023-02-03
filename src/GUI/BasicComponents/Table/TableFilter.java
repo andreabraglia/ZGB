@@ -4,8 +4,11 @@ import javax.swing.table.TableModel;
 import javax.swing.RowFilter;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.time.temporal.WeekFields;
@@ -15,6 +18,7 @@ public class TableFilter {
   private final TableRowSorter<TableModel> sorter;
   private final JTable table;
 
+  private int clickedRow = -1;
 
   public TableFilter(JTable table) {
     this.table = table;
@@ -26,14 +30,48 @@ public class TableFilter {
     table.setRowSelectionInterval(row, row);
   }
 
-  public void highlightRows(int[] columns) {
+  public void removeHighlight() {
+    table.clearSelection();
+  }
+
+  public void highlightRows(ArrayList<Integer> columns) {
+    int j = 0;
+
     for (int column : columns) {
-      table.setColumnSelectionInterval(column, column);
+      if(j > this.clickedRow) {
+        highlightRow(column);
+        clickedRow++;
+        return;
+      }
+
+      j++;
     }
   }
 
   public void filterByString(String filterText) {
     sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterText));
+  }
+
+  public void highlightByString(String filterText) {
+    filterText = filterText.toLowerCase();
+
+    int maxRows = table.getRowCount();
+    int maxColumns = table.getColumnCount();
+    ArrayList<Integer> rows = new ArrayList<>();
+
+    for (int i = 0; i < maxRows; i++) {
+      for (int j = 0; j < maxColumns; j++) {
+        String cellValue = table.getValueAt(i, j).toString();
+
+        if (cellValue.toLowerCase().contains(filterText)) {
+          System.out.println("Trovato: " + cellValue);
+          rows.add(i);
+          break;
+        }
+      }
+    }
+
+    highlightRows(rows);
   }
 
   public void filterByCol(String text, int column) {

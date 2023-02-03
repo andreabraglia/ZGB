@@ -6,16 +6,15 @@
     - [x]  Aggiungi voce (Default data NOW)
     - [x] Rimuovi voce
     - [x] Modifica voce
-  - [ ] Visualizza bilancio
+  - [x] Visualizza bilancio
     - [x] Filtro per singolo giorno
-    - Filtro per settimana
+    - [x] Filtro per settimana
     - [x] Filtro per mese
     - [x] Filtro per anno
 - [ ] Salvataggio e caricamento del bilancio
   - [ ] Salvataggio su file specificandone il nome, nel caso in cui si tenti di salvare il bilancio in un file che esiste già, deve essere chiesto
     all’utente se desidera sovrascrivere il file esistente
-  - [ ] Si implementi un meccanismo di salvataggio automatico basato su un thread che
-     periodicamente salva le informazioni in un file temporaneo
+  - [ ] Si implementi un meccanismo di salvataggio automatico basato su un thread che periodicamente salva le informazioni in un file temporaneo
   - [x] Caricamento da file specificandone il nome
 - [ ] Ricerca di informazioni nel bilancio
   - [ ] La ricerca si basa su testo libero che può essere una parte del testo contenuto in una voce

@@ -5,6 +5,7 @@ import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.Panel;
 import GUI.BasicComponents.Table.MovimentiTable;
 import GUI.BasicComponents.Table.MovimentiTableModel;
+import GUI.BasicComponents.Table.TableFilter;
 import GUI.Styles.Colors;
 import GUI.Styles.Dimensions;
 
@@ -22,9 +23,8 @@ public class MovimentiPanel extends CenteredPanel {
     super(true);
 
     Panel mainPanel = new Panel(Colors.WHITE, true);
-
     Panel header = new Panel(Colors.WHITE, true);
-
+    Component spacer = Box.createRigidArea(new Dimension(0, GAP.getDimension()));
     JLabel titolo = new JLabel(contoCorrente.getIntestatario());
     JLabel numeroConto = new JLabel(" - Numero conto: " + contoCorrente.getNumeroCC());
     JLabel saldo = new JLabel("Saldo attuale: " + contoCorrente.getSaldoAttuale() + " €", SwingConstants.CENTER);
@@ -49,15 +49,35 @@ public class MovimentiPanel extends CenteredPanel {
     numeroConto.setAlignmentX(0.8f);
     header.add(numeroConto);
 
+
     saldo.setFont(subtitleFont);
     saldo.setAlignmentX(.78f);
     header.add(saldo);
 
     mainPanel.add(header);
     mainPanel.add(new JSeparator(JSeparator.HORIZONTAL));
-    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
+    mainPanel.add(spacer);
+
+    Panel filterPanel = new Panel(Colors.WHITE);
+    filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.X_AXIS));
+    JLabel filterLabel = new JLabel("Filtra per testo: ");
+    JTextField filterField = new JTextField(10);
+    JButton filterButton = new JButton("Cerca");
 
     MovimentiTable table = new MovimentiTable(new MovimentiTableModel(contoCorrente, saldo));
+
+    TableFilter filter = new TableFilter(table.getTable());
+
+    filterButton.addActionListener(e -> filterTable(filterField, filter));
+    filterField.addActionListener(e -> filterTable(filterField, filter));
+
+    filterPanel.add(filterLabel);
+    filterPanel.add(filterField);
+    filterPanel.add(filterButton);
+    mainPanel.add(filterPanel);
+    mainPanel.add(spacer);
+
+
     mainPanel.add(table.getScrollPane());
 
     Panel buttonsPanel = new Panel(Colors.WHITE);
@@ -105,5 +125,15 @@ public class MovimentiPanel extends CenteredPanel {
     mainPanel.add(buttonsPanel);
 
     add(mainPanel);
+  }
+
+  private void filterTable(JTextField filterField, TableFilter filter) {
+    String filterString = filterField.getText();
+    if (filterString.isEmpty()) {
+      filter.removeHighlight();
+      return;
+    }
+
+    filter.highlightByString(filterString);
   }
 }

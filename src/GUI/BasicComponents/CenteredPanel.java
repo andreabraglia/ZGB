@@ -49,6 +49,7 @@ public class CenteredPanel extends JPanel {
 
   @Override
   protected void paintComponent(Graphics g) {
+
     if (this.isShadowed) {
       int shade = 0;
       int topOpacity = 80;

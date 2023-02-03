@@ -31,7 +31,6 @@ public class FindMovimentoPanel extends CenteredPanel {
     JLabel totalAmountLabel = new JLabel("Total Amount: " + contoCorrente.getSaldoAttuale());
     MovimentiTable table = new MovimentiTable(new MovimentiTableModel(contoCorrente, totalAmountLabel));
 
-//    JTable table = new JTable(new MovimentiTableModel(contoCorrente, totalAmountLabel));
     TableFilter filter = new TableFilter(table.getTable());
 
 
