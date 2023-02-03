@@ -1,8 +1,7 @@
+
 import Core.ContoCorrente;
 import Core.Movimento;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 
 import GUI.*;
@@ -44,11 +43,10 @@ public class Main {
       cc.readFromCSVFile("conto_corrente.csv");
       main = new MainFrame(cc);
       main.setVisible(true);
-//      cc.writeToTXTFile("conto_corrente.txt");
-//      cc.readFromTXTFile("conto_corrente.txt");
-
-//      cc.writeToCSVFile("conto_corrente.csv");
-    } catch (IOException | ParseException error) {
+      //  cc.writeToTXTFile("conto_corrente.txt");
+      //  cc.readFromTXTFile("conto_corrente.txt");
+      //  cc.writeToCSVFile("conto_corrente.csv");
+    } catch (Exception error) {
       JOptionPane.showMessageDialog(main, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
       error.printStackTrace();
     }

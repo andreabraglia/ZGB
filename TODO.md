@@ -17,7 +17,7 @@
   - [ ] Si implementi un meccanismo di salvataggio automatico basato su un thread che periodicamente salva le informazioni in un file temporaneo
   - [x] Caricamento da file specificandone il nome
 - [ ] Ricerca di informazioni nel bilancio
-  - [ ] La ricerca si basa su testo libero che può essere una parte del testo contenuto in una voce
+  - [x] La ricerca si basa su testo libero che può essere una parte del testo contenuto in una voce
     La ricerca deve evidenziare la prima cella/riga che contiene il testo cercato; l’applicazione deve permettere
     all’utente di continuare la ricerca per evidenziare man mano le celle/righe successive che rispondono ai
     requisiti (ad esempio, tramite un bottone “successivo”, o usando lo stesso bottone della ricerca).

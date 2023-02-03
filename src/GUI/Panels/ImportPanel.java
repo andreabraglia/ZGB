@@ -9,7 +9,6 @@ import GUI.Styles.Dimensions;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 import static GUI.Styles.Dimensions.GAP;
 
@@ -32,31 +31,10 @@ public class ImportPanel extends CenteredPanel {
 
 
     JButton importButtonCSV = new JButton("Importa come CSV");
-    importButtonCSV.addActionListener(e -> {
-        FileChooser fileChooser = new FileChooser();
-
-        try {
-          contoCorrente.readFromCSVFile(fileChooser.getSelectedFile());
-          contoCorrente.print();
-        } catch (IOException error) {
-          JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-          error.printStackTrace();
-        }
-      }
-    );
+    importButtonCSV.addActionListener(e -> importHandler(mainPanel, "csv", contoCorrente));
 
     JButton importButtonTXT = new JButton("Importa come TXT");
-    importButtonTXT.addActionListener(e -> {
-        FileChooser fileChooser = new FileChooser();
-        try {
-          contoCorrente.readFromTXTFile(fileChooser.getSelectedFile());
-          contoCorrente.print();
-        } catch (IOException error) {
-          JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-          error.printStackTrace();
-        }
-      }
-    );
+    importButtonTXT.addActionListener(e -> importHandler(mainPanel, "txt", contoCorrente));
 
     mainPanel.add(pathLabel);
 
@@ -66,5 +44,24 @@ public class ImportPanel extends CenteredPanel {
 
     mainPanel.add(buttonPanel);
     add(mainPanel);
+  }
+
+  private void importHandler(Panel mainPanel, String extension, ContoCorrente contoCorrente) {
+    FileChooser fileChooser = new FileChooser(extension);
+
+    try {
+      if (extension.equals("csv")) {
+        contoCorrente.readFromCSVFile(fileChooser.getSelectedFile());
+      } else if (extension.equals("txt")) {
+        contoCorrente.readFromTXTFile(fileChooser.getSelectedFile());
+      }
+
+      contoCorrente.print();
+      JOptionPane.showMessageDialog(mainPanel, "Caricamento del file '" + fileChooser.getSelectedFile() + "' avvenuto con successo", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (Exception error) {
+      JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+      error.printStackTrace();
+    }
   }
 }

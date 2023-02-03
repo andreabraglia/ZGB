@@ -1,10 +1,12 @@
 package GUI.BasicComponents;
 
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
 public class FileSaverChooser extends JFileChooser {
+
+  private String extension;
 
   public FileSaverChooser() {
     super();
@@ -29,11 +31,35 @@ public class FileSaverChooser extends JFileChooser {
   public void approveSelection() {
     File file = getSelectedFile();
 
-    if (!file.getName().endsWith(".txt") || !file.getName().endsWith(".csv")) {
-      file = new File(file.getAbsolutePath() + ".txt");
+    if (!file.getAbsolutePath().endsWith(this.extension)) {
+      System.out.println("[DEBUG] L'estensione non è stata specificata, aggiungo .txt");
+      System.out.println("[DEBUG] Il percorso del file è: " + file.getAbsolutePath());
+      System.out.println("[DEBUG] Il nome del file è: " + file.getName() + " -> " + file.getAbsolutePath().endsWith(".txt"));
+
+
+      file = new File(file.getAbsolutePath() + "." + this.extension);
     }
 
     setSelectedFile(file);
+
+    if (file.exists()) {
+      int result = JOptionPane.showConfirmDialog(this, "Il file esiste già, vuoi sovrascriverlo?", "Attenzione", JOptionPane.YES_NO_CANCEL_OPTION);
+      switch (result) {
+        case JOptionPane.YES_OPTION: {
+          super.approveSelection();
+          return;
+        }
+        case JOptionPane.NO_OPTION:
+        case JOptionPane.CLOSED_OPTION: {
+          return;
+        }
+        case JOptionPane.CANCEL_OPTION: {
+          cancelSelection();
+          return;
+        }
+      }
+    }
+
     super.approveSelection();
   }
 
@@ -41,5 +67,7 @@ public class FileSaverChooser extends JFileChooser {
     if (extension.isEmpty() || !extension.matches("txt|csv")) {
       throw new IllegalArgumentException("L'estensione deve essere 'txt' o 'csv'");
     }
+
+    this.extension = extension;
   }
 }
