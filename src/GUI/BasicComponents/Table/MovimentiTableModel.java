@@ -56,7 +56,6 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
   @Override
   public Object getValueAt(int rowIndex, int columnIndex) {
     Movimento movimento = cc.getMovimento(rowIndex);
-    System.out.println("[DEBUG] getValueAt: " + movimento);
     if (movimento == null) {
       return null;
     }
@@ -99,7 +98,6 @@ public class MovimentiTableModel extends AbstractTableModel implements TableMode
 
   @Override
   public void tableChanged(TableModelEvent e) {
-    // Aggiorna l'importo totale quando il contenuto della tabella cambia
     System.out.println("[DEBUG] Table changed");
     updateTotalAmount();
   }

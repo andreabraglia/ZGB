@@ -29,7 +29,6 @@ public class Button extends JButton {
     MouseListener mouseListener = new MouseAdapter() {
       @Override
       public void mouseEntered(MouseEvent evt) {
-        System.out.println("[DEBUG] Button: Entered");
         Component button = evt.getComponent();
         Font font = button.getFont();
         Map<TextAttribute, Integer> attributes = (Map<TextAttribute, Integer>) font.getAttributes();
@@ -39,7 +38,6 @@ public class Button extends JButton {
 
       @Override
       public void mouseExited(MouseEvent evt) {
-        System.out.println("[DEBUG] Button: Exited");
         Component button = evt.getComponent();
         Font font = button.getFont();
         Map<TextAttribute, ?> attributes = font.getAttributes();

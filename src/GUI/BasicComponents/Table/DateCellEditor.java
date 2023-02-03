@@ -12,22 +12,24 @@ import javax.swing.text.MaskFormatter;
 public class DateCellEditor extends DefaultCellEditor {
   @Serial
   private static final long serialVersionUID = 1L;
-  private final JFormattedTextField ftf;
+  private final JFormattedTextField formattedTextField;
 
   public DateCellEditor() throws ParseException {
     super(new JFormattedTextField());
-    ftf = (JFormattedTextField) getComponent();
+
+    formattedTextField = (JFormattedTextField) getComponent();
+
     MaskFormatter dateMask = new MaskFormatter(Movimento.MASK_DATE_FORMAT);
     DefaultFormatterFactory dateMaskFormat = new DefaultFormatterFactory(dateMask);
 
-    ftf.setFormatterFactory(dateMaskFormat);
-    ftf.setValue(null);
-    ftf.setHorizontalAlignment(JFormattedTextField.CENTER);
-    ftf.setFocusLostBehavior(JFormattedTextField.PERSIST);
+    formattedTextField.setFormatterFactory(dateMaskFormat);
+    formattedTextField.setValue(null);
+    formattedTextField.setHorizontalAlignment(JFormattedTextField.CENTER);
+    formattedTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
   }
 
   public Object getCellEditorValue() {
-    return ftf.getValue();
+    return formattedTextField.getValue();
   }
 
   public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {

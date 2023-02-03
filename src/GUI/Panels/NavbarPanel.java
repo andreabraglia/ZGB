@@ -62,33 +62,33 @@ public class NavbarPanel extends CenteredPanel {
         return;
       }
 
-      // Gestisce l'evento di click del bottone
-      switch (text) {
-        case "Home" -> {
-          // Mostra il pannello principale
-          try {
+      try {
+        // Gestisce l'evento di click del bottone
+        switch (text) {
+          case "Home" -> {
+            // Mostra il pannello principale
             currentObject = new MovimentiPanel(contoCorrente);
-          } catch (Exception e1) {
 
-            e1.printStackTrace();
+          }
+          case "Cerca" -> {
+            // Mostra il pannello per cercare un elemento
+            currentObject = new FindMovimentoPanel(contoCorrente);
+          }
+          case "Importa" -> {
+            // Mostra il pannello per importare un file
+            currentObject = new ImportPanel(contoCorrente);
+          }
+          case "Esporta" -> {
+            // Mostra il pannello per esportare un file
+            currentObject = new ExportPanel(contoCorrente);
+          }
+          default -> {
           }
         }
-        case "Cerca" -> {
-          // Mostra il pannello per cercare un elemento
-          currentObject = new FindMovimentoPanel(contoCorrente);
-        }
-        case "Importa" -> {
-          // Mostra il pannello per importare un file
-          currentObject = new ImportPanel(contoCorrente);
-        }
-        case "Esporta" -> {
-          // Mostra il pannello per esportare un file
-          currentObject = new ExportPanel(contoCorrente);
-        }
-        default -> {
-        }
+      } catch (Exception error) {
+        error.printStackTrace();
+        JOptionPane.showMessageDialog(mainPanel, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
       }
-
 
       mainPanel.add(currentObject, BorderLayout.CENTER);
       mainPanel.updateUI();

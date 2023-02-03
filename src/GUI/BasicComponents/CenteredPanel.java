@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class CenteredPanel extends JPanel {
   protected int pixels = 3;
-  private boolean isShadowed;
+  private final boolean isShadowed;
   GridBagConstraints constraints;
 
   public CenteredPanel() {
@@ -41,18 +41,6 @@ public class CenteredPanel extends JPanel {
     }
   }
 
-  public CenteredPanel(GridBagConstraints constraints, boolean isShadowed) {
-    this.constraints = constraints;
-    setLayout(new GridBagLayout());
-    setBorder(new LineBorder(Color.GREEN, 3));
-  }
-
-  public CenteredPanel(GridBagConstraints constraints) {
-    this.constraints = constraints;
-    setLayout(new GridBagLayout());
-    setBorder(new LineBorder(Color.GREEN, 3));
-  }
-
   @Override
   public Component add(Component comp) {
     super.add(comp, constraints);
@@ -61,10 +49,7 @@ public class CenteredPanel extends JPanel {
 
   @Override
   protected void paintComponent(Graphics g) {
-    System.out.println("[DEBUG] Painting" + g);
-
     if (this.isShadowed) {
-      System.out.println("[DEBUG] Painting shadows");
       int shade = 0;
       int topOpacity = 80;
       for (int i = 0; i < pixels; i++) {
@@ -77,7 +62,6 @@ public class CenteredPanel extends JPanel {
       return;
     }
 
-    System.out.println("[DEBUG] Painting graphic");
     super.paintComponent(g);
   }
 }

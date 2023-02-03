@@ -2,14 +2,12 @@ package GUI.Panels;
 
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
-import GUI.BasicComponents.FileChooser;
 import GUI.BasicComponents.FileSaverChooser;
 import GUI.BasicComponents.Panel;
 import GUI.Styles.Colors;
 import GUI.Styles.Dimensions;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

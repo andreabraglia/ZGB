@@ -2,13 +2,9 @@ package GUI.BasicComponents;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 public class FileSaverChooser extends JFileChooser {
-
-  private String extension;
-
 
   public FileSaverChooser() {
     super();
@@ -45,7 +41,5 @@ public class FileSaverChooser extends JFileChooser {
     if (extension.isEmpty() || !extension.matches("txt|csv")) {
       throw new IllegalArgumentException("L'estensione deve essere 'txt' o 'csv'");
     }
-
-    this.extension = extension;
   }
 }

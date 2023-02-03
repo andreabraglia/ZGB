@@ -7,10 +7,10 @@
     - [x] Rimuovi voce
     - [x] Modifica voce
   - [ ] Visualizza bilancio
-    - Filtro per singolo giorno
+    - [x] Filtro per singolo giorno
     - Filtro per settimana
-    - Filtro per mese
-    - Filtro per anno
+    - [x] Filtro per mese
+    - [x] Filtro per anno
 - [ ] Salvataggio e caricamento del bilancio
   - [ ] Salvataggio su file specificandone il nome, nel caso in cui si tenti di salvare il bilancio in un file che esiste già, deve essere chiesto
     all’utente se desidera sovrascrivere il file esistente
