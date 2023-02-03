@@ -4,15 +4,12 @@ import javax.swing.table.TableModel;
 import javax.swing.RowFilter;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 import java.time.temporal.WeekFields;
-import java.util.stream.IntStream;
 
 public class TableFilter {
   private final TableRowSorter<TableModel> sorter;
@@ -64,7 +61,6 @@ public class TableFilter {
         String cellValue = table.getValueAt(i, j).toString();
 
         if (cellValue.toLowerCase().contains(filterText)) {
-          System.out.println("Trovato: " + cellValue);
           rows.add(i);
           break;
         }

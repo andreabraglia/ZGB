@@ -13,7 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Objects;
 
 import static GUI.Styles.Dimensions.GAP;
@@ -44,7 +47,7 @@ public class FindMovimentoPanel extends CenteredPanel {
 
     select.addActionListener(e -> {
       String selectedOption = (String) select.getSelectedItem();
-      System.out.println("Il valore è: " + selectedOption);
+      System.out.println("[DEBUG] Filtro: " + selectedOption);
     });
 
     filterInput.addActionListener(e -> {
@@ -61,11 +64,51 @@ public class FindMovimentoPanel extends CenteredPanel {
         return;
       }
 
+      int value;
+      try {
+        value = Integer.parseInt(filterValue);
+        if (value < 1) {
+          throw new NumberFormatException();
+        }
+      } catch (NumberFormatException exception) {
+        handleErrorMessage("Il valore inserito deve essere un numero, maggiore o uguale a 1");
+        return;
+      }
+
       switch (selectedOption) {
-        case "Anno" -> filter.filterByYear(filterValue);
-        case "Mese" -> filter.filterByMonth(filterValue);
-        case "Giorno" -> filter.filterByDay(filterValue);
-        case "Settimana" -> filter.filterByWeek(filterValue);
+        case "Anno" -> {
+          if(value > LocalDate.now().getYear()) {
+            handleErrorMessage("L'anno deve essere minore o uguale all'anno corrente");
+            return;
+          }
+
+          filter.filterByYear(filterValue);
+        }
+        case "Mese" -> {
+          if (value > 12) {
+            handleErrorMessage("Il mese deve essere un numero minore di 12 e maggiore di 0");
+            return;
+          }
+
+          filter.filterByMonth(filterValue);
+        }
+        case "Giorno" -> {
+          if (value > LocalDate.now().getMonth().maxLength()) {
+            handleErrorMessage("Il mese deve essere un numero minore di 12 e maggiore di 0");
+            return;
+          }
+
+          filter.filterByDay(filterValue);
+        }
+        case "Settimana" -> {
+          if (value > 52) {
+            handleErrorMessage("La settimana deve essere un numero minore di 52 e maggiore di 0");
+            return;
+          }
+
+
+          filter.filterByWeek(filterValue);
+        }
         default -> filter.filterByString(filterValue);
       }
 
@@ -99,5 +142,9 @@ public class FindMovimentoPanel extends CenteredPanel {
     mainPanel.add(table.getScrollPane());
 
     add(mainPanel);
+  }
+
+  private void handleErrorMessage(String message) {
+    JOptionPane.showMessageDialog(this, message, "Errore", JOptionPane.ERROR_MESSAGE);
   }
 }

@@ -211,6 +211,10 @@ public class ContoCorrente {
 
     return true;
   }
+
+  public int getNumeroMovimenti() {
+    return this.contatoreMovimenti;
+  }
 }
 
 

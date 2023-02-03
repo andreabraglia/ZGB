@@ -24,11 +24,7 @@ public class ImportPanel extends CenteredPanel {
     );
     titolo.setFont(titleFont);
 
-    mainPanel.add(titolo);
-    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
-
     JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
-
 
     JButton importButtonCSV = new JButton("Importa come CSV");
     importButtonCSV.addActionListener(e -> importHandler(mainPanel, "csv", contoCorrente));
@@ -36,13 +32,17 @@ public class ImportPanel extends CenteredPanel {
     JButton importButtonTXT = new JButton("Importa come TXT");
     importButtonTXT.addActionListener(e -> importHandler(mainPanel, "txt", contoCorrente));
 
-    mainPanel.add(pathLabel);
-
     Panel buttonPanel = new Panel(Colors.WHITE, true);
     buttonPanel.add(importButtonCSV);
     buttonPanel.add(importButtonTXT);
 
+    mainPanel.add(titolo);
+    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
+
+    mainPanel.add(pathLabel);
+    mainPanel.add(new JSeparator(JSeparator.HORIZONTAL));
     mainPanel.add(buttonPanel);
+
     add(mainPanel);
   }
 
