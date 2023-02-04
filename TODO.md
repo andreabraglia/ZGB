@@ -14,7 +14,7 @@
   - [x] Salvataggio su file specificandone il nome
     - [x] <strong>+2 pt</strong> Nel caso in cui si tenti di salvare il bilancio in un file che esiste già, deve essere chiesto
       all’utente se desidera sovrascrivere il file esistente
-    - [ ] <strong>+5 pt</strong> Si implementi un meccanismo di salvataggio automatico basato su un thread che periodicamente salva le informazioni in un file temporaneo
+    - [x] <strong>+5 pt</strong> Si implementi un meccanismo di salvataggio automatico basato su un thread che periodicamente salva le informazioni in un file temporaneo
   - [x] Caricamento da file specificandone il nome
 - [x] Ricerca di informazioni nel bilancio
   - [x] La ricerca si basa su testo libero che può essere una parte del testo contenuto in una voce

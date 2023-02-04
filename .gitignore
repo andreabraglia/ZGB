@@ -227,3 +227,5 @@ Temporary Items
 conto_corrente*
 conto_corrente_data*
 bin
+.backup
+.backup/*

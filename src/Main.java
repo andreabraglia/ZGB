@@ -1,7 +1,10 @@
 
+import Core.AutoSaver;
 import Core.ContoCorrente;
 import Core.Movimento;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 import GUI.*;
@@ -11,26 +14,8 @@ import javax.swing.*;
 
 public class Main {
   public static void main(String[] args) {
-    System.out.println("[TEST] Inizio test creazione movimenti");
-    Movimento t1 = new Movimento(100, "Entrata di prova", LocalDateTime.now());
-    Movimento t2 = new Movimento(-100, "Uscita di prova", LocalDateTime.now());
-    System.out.println("1:");
-    System.out.println(" " + t1);
-    System.out.println("2:");
-    System.out.println(" " + t2);
-
-    System.out.println("\n\n");
-    System.out.println("-----------------------");
-    System.out.println("[TEST] Inizio test salvataggio dati su file");
     // Crea un nuovo conto corrente
-    ContoCorrente cc = new ContoCorrente(123456, 1000.0f, "Mario Rossi");
-
-    // Aggiunge alcuni movimenti al conto corrente
-    cc.addMovimento(new Movimento(-100.0f, "Pagamento bolletta", LocalDateTime.now()));
-    cc.addMovimento(new Movimento(150.0f, "Addebito stipendio", LocalDateTime.now()));
-    cc.addMovimento(new Movimento(-50.0f, "Prelevamento bancomat", LocalDateTime.now()));
-
-    // Scrive i dati del conto corrente su file
+    ContoCorrente cc = new ContoCorrente();
 
     System.out.println("-----------------------");
 
@@ -40,12 +25,14 @@ public class Main {
     // Init GUI
     MainFrame main = null;
     try {
-      cc.readFromCSVFile("conto_corrente.csv");
+      if (Files.exists(Path.of(AutoSaver.getAutoSaveFile()))) {
+        cc.readFromTXTFile(AutoSaver.getAutoSaveFile());
+      }
+
       main = new MainFrame(cc);
       main.setVisible(true);
-      //  cc.writeToTXTFile("conto_corrente.txt");
-      //  cc.readFromTXTFile("conto_corrente.txt");
-      //  cc.writeToCSVFile("conto_corrente.csv");
+      AutoSaver autoSaver = new AutoSaver(cc);
+      autoSaver.start();
     } catch (Exception error) {
       JOptionPane.showMessageDialog(main, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
       error.printStackTrace();

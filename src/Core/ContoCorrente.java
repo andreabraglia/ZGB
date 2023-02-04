@@ -16,6 +16,10 @@ public class ContoCorrente {
   private int contatoreMovimenti;
   private String intestatario;
 
+  public ContoCorrente() {
+    this(0, 0f, "");
+  }
+
   public ContoCorrente(int numeroCC, float saldoIniziale, String intestatario) {
     this.numeroCC = numeroCC;
     this.movimenti = new Movimento[100];
