@@ -35,7 +35,7 @@ public class TableFilter {
     int j = 0;
 
     for (int column : columns) {
-      if(j > this.clickedRow) {
+      if (j > this.clickedRow) {
         highlightRow(column);
         clickedRow++;
         return;
@@ -120,5 +120,9 @@ public class TableFilter {
 
 
     filterByCol(String.valueOf(regex), MovimentiTableModel.getColumnIndex("Data"));
+  }
+
+  public void update() {
+    sorter.modelStructureChanged();
   }
 }

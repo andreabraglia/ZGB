@@ -6,13 +6,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 
 public class ContoCorrente {
   private int numeroCC;
   private float saldoIniziale;
-  private Movimento[] movimenti;
+  private ArrayList<Movimento> movimenti;
   private int contatoreMovimenti;
   private String intestatario;
 
@@ -22,42 +23,36 @@ public class ContoCorrente {
 
   public ContoCorrente(int numeroCC, float saldoIniziale, String intestatario) {
     this.numeroCC = numeroCC;
-    this.movimenti = new Movimento[100];
+    this.movimenti = new ArrayList<>();
     this.intestatario = intestatario;
     this.contatoreMovimenti = 0;
 
     this.saldoIniziale = saldoIniziale;
-    if (saldoIniziale != 0) {
-      this.addMovimento(new Movimento(saldoIniziale, "Saldo iniziale", LocalDateTime.now()));
+    if (saldoIniziale != 0f) {
+      System.out.println("AGGIORNO SALDO: " + saldoIniziale);
+      Movimento primoMov = new Movimento(saldoIniziale, "Saldo iniziale", LocalDateTime.now());
+      addMovimento(primoMov);
     }
   }
 
   public float getSaldoAttuale() {
-    float saldo = this.saldoIniziale;
-    for (int i = 0; i < this.contatoreMovimenti; i++) {
-      saldo += this.movimenti[i].getAmount();
+    float saldo = 0;
+    for (Movimento movimento : this.movimenti) {
+      saldo += movimento.getAmount();
     }
 
     return saldo;
   }
 
   public void addMovimento(Movimento movimento) {
-    if (this.contatoreMovimenti >= this.movimenti.length) {
-      Movimento[] newMovimenti = new Movimento[this.movimenti.length + 100];
-      IntStream.range(0, this.movimenti.length).forEach(i -> newMovimenti[i] = this.movimenti[i]);
-      this.movimenti = newMovimenti;
-    }
-
-    movimenti[contatoreMovimenti] = movimento;
+    System.out.println("\nAggiunto movimento: " + movimento);
+    movimenti.add(movimento);
     contatoreMovimenti++;
   }
 
   public void printMov() {
-    for (int i = 0; i < this.contatoreMovimenti; i++) {
-      System.out.println(
-        " " + i + " -> " +
-          this.movimenti[i] + "[" + (this.movimenti[i].getAmount() > 0 ? "Versamento" : "Prelievo") + "]"
-      );
+    for (Movimento mov : this.movimenti) {
+      System.out.println(mov);
     }
   }
 
@@ -126,8 +121,7 @@ public class ContoCorrente {
     writer.newLine();
 
     // Scrive i movimenti del conto corrente
-    for (int i = 0; i < contatoreMovimenti; i++) {
-      Movimento movimento = movimenti[i];
+    for (Movimento movimento : movimenti) {
       writer.write(Float.toString(movimento.getAmount()));
       writer.write(separator);
       writer.write(movimento.getDescription());
@@ -170,6 +164,9 @@ public class ContoCorrente {
 
   public void setSaldoIniziale(float saldoIniziale) {
     this.saldoIniziale = saldoIniziale;
+    Movimento movimento = new Movimento(saldoIniziale, "Saldo iniziale", LocalDateTime.now());
+    movimenti.add(movimento);
+    contatoreMovimenti++;
   }
 
   public int getContatoreMovimenti() {
@@ -189,8 +186,8 @@ public class ContoCorrente {
       return null;
     }
 
-    return this.movimenti[i];
-  }
+    return (this.movimenti.get(i));
+}
 
   public boolean isEmpty() {
     return (this.intestatario.equals("") && this.numeroCC == 0);
@@ -201,16 +198,8 @@ public class ContoCorrente {
       return false;
     }
 
-    Movimento[] newMovimenti = new Movimento[this.contatoreMovimenti];
+    this.movimenti.remove(index);
 
-    for (int i = 0; i < this.contatoreMovimenti; i++) {
-      if (i == index) {
-        continue;
-      }
-      newMovimenti[i > index ? i - 1 : i] = this.movimenti[i];
-    }
-
-    this.movimenti = newMovimenti;
     this.contatoreMovimenti--;
 
     return true;

@@ -4,15 +4,26 @@ import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.FileChooser;
 import GUI.BasicComponents.Panel;
-import GUI.Styles.Colors;
-import GUI.Styles.Dimensions;
+import GUI.Enums.Colors;
+import GUI.Enums.Dimensions;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static GUI.Styles.Dimensions.GAP;
+import static GUI.Enums.Dimensions.GAP;
+import static GUI.Enums.UtilsComponents.DIVIDER;
+import static GUI.Enums.UtilsComponents.SPACER;
 
+/**
+ * Pannello per l'importazione di un conto corrente da file
+ */
 public class ImportPanel extends CenteredPanel {
+
+  /**
+   * Costruttore del pannello che lo inizializza,
+   * aggiunge i componenti al suo interno, definendone anche la logica
+   * @param contoCorrente Il conto corrente
+   */
   public ImportPanel(ContoCorrente contoCorrente) {
     super(true);
 
@@ -22,6 +33,7 @@ public class ImportPanel extends CenteredPanel {
     Font titleFont = new Font(
       titolo.getFont().getName(), titolo.getFont().getStyle(), Dimensions.TITLE_FONT_SIZE.getDimension()
     );
+
     titolo.setFont(titleFont);
 
     JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
@@ -37,15 +49,21 @@ public class ImportPanel extends CenteredPanel {
     buttonPanel.add(importButtonTXT);
 
     mainPanel.add(titolo);
-    mainPanel.add(Box.createRigidArea(new Dimension(0, GAP.getDimension())));
+    mainPanel.add(SPACER.getComponent());
 
     mainPanel.add(pathLabel);
-    mainPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+    mainPanel.add(DIVIDER.getComponent());
     mainPanel.add(buttonPanel);
 
     add(mainPanel);
   }
 
+  /**
+   * Gestisce l'importazione di un file CSV o TXT
+   * @param mainPanel Il pannello principale
+   * @param extension L'estensione del file da importare
+   * @param contoCorrente Il conto corrente
+   */
   private void importHandler(Panel mainPanel, String extension, ContoCorrente contoCorrente) {
     FileChooser fileChooser = new FileChooser(extension);
 

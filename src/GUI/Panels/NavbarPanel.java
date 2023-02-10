@@ -4,16 +4,18 @@ import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
 import GUI.BasicComponents.Button;
 import GUI.BasicComponents.Panel;
-import GUI.Styles.Colors;
+import GUI.Enums.Colors;
 
 import javax.swing.*;
 
 import java.awt.*;
 
+/**
+ * Pannello per la navigazione tra i vari pannelli
+ */
 public class NavbarPanel extends CenteredPanel {
   JPanel mainPanel;
   JPanel currentObject;
-
   ContoCorrente contoCorrente;
 
   // Costruttore della classe Navbar
@@ -50,50 +52,57 @@ public class NavbarPanel extends CenteredPanel {
 
     button.addActionListener(e -> {
       System.out.println("[DEBUG] Clicked on " + text);
-      mainPanel.remove(currentObject);
-
-      System.out.println("[DEBUG] Panel: " + mainPanel);
-      System.out.println("[DEBUG] Remove: " + currentObject);
-
-      if (contoCorrente.isEmpty() && !text.equals("Importa")) {
-        currentObject = new CreationAccountPanel(contoCorrente);
-        mainPanel.add(currentObject, BorderLayout.CENTER);
-        mainPanel.updateUI();
-        return;
-      }
-
-      try {
-        // Gestisce l'evento di click del bottone
-        switch (text) {
-          case "Home" -> {
-            // Mostra il pannello principale
-            currentObject = new MovimentiPanel(contoCorrente);
-
-          }
-          case "Cerca" -> {
-            // Mostra il pannello per cercare un elemento
-            currentObject = new FindMovimentoPanel(contoCorrente);
-          }
-          case "Importa" -> {
-            // Mostra il pannello per importare un file
-            currentObject = new ImportPanel(contoCorrente);
-          }
-          case "Esporta" -> {
-            // Mostra il pannello per esportare un file
-            currentObject = new ExportPanel(contoCorrente);
-          }
-          default -> {
-          }
-        }
-      } catch (Exception error) {
-        error.printStackTrace();
-        JOptionPane.showMessageDialog(mainPanel, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-      }
-
-      mainPanel.add(currentObject, BorderLayout.CENTER);
-      mainPanel.updateUI();
+      navigateTo(text);
     });
 
     return button;
+  }
+
+
+  public void navigateTo(String panelName) {
+    System.out.println("[DEBUG] Navigate to " + panelName);
+    mainPanel.remove(currentObject);
+
+    System.out.println("[DEBUG] Panel: " + mainPanel);
+    System.out.println("[DEBUG] Remove: " + currentObject);
+
+    if (contoCorrente.isEmpty() && !panelName.equals("Importa")) {
+      currentObject = new CreationAccountPanel(contoCorrente, () -> {
+        navigateTo("Home");
+        return null;
+      });
+      mainPanel.add(currentObject, BorderLayout.CENTER);
+      mainPanel.updateUI();
+      return;
+    }
+
+    try {
+      switch (panelName) {
+        case "Home" -> {
+          // Mostra il pannello principale
+          currentObject = new MovimentiPanel(contoCorrente);
+        }
+        case "Cerca" -> {
+          // Mostra il pannello per cercare un elemento
+          currentObject = new FindMovimentoPanel(contoCorrente);
+        }
+        case "Importa" -> {
+          // Mostra il pannello per importare un file
+          currentObject = new ImportPanel(contoCorrente);
+        }
+        case "Esporta" -> {
+          // Mostra il pannello per esportare un file
+          currentObject = new ExportPanel(contoCorrente);
+        }
+        default -> {
+        }
+      }
+    } catch (Exception error) {
+      error.printStackTrace();
+      JOptionPane.showMessageDialog(mainPanel, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+    }
+
+    mainPanel.add(currentObject, BorderLayout.CENTER);
+    mainPanel.updateUI();
   }
 }

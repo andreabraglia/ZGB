@@ -1,6 +1,6 @@
 package GUI.BasicComponents;
 
-import GUI.Styles.Colors;
+import GUI.Enums.Colors;
 
 import java.awt.*;
 import java.time.LocalDate;

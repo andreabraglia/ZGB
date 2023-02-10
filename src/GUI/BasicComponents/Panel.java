@@ -1,6 +1,6 @@
 package GUI.BasicComponents;
 
-import GUI.Styles.Colors;
+import GUI.Enums.Colors;
 
 import javax.swing.*;
 import java.awt.*;

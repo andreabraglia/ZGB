@@ -7,16 +7,33 @@ import GUI.BasicComponents.Panel;
 import GUI.Panels.CreationAccountPanel;
 import GUI.Panels.MovimentiPanel;
 import GUI.Panels.NavbarPanel;
-import GUI.Styles.Colors;
-import GUI.Styles.Dimensions;
+import GUI.Enums.Colors;
+import GUI.Enums.Dimensions;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
 
+/**
+ * Classe che crea la finestra principale della GUI
+ */
 public class MainFrame extends Frame {
+
+  /**
+   * Riferimento alla navbar {@link NavbarPanel}
+   */
+  NavbarPanel navbar;
+
+  /**
+   * Costruttore della classe che inzializza la finestra principale
+   *
+   * @param cc Conto corrente
+   *
+   * @throws ParseException Eccezione un formato non è corretto
+   */
   public MainFrame(ContoCorrente cc) throws ParseException {
     super("Home", 500, 500, 300, 100);
 
@@ -30,20 +47,29 @@ public class MainFrame extends Frame {
     add(mainPanel);
 
     // Controlla se il conto corrente è vuoto
-    // e nel caso crea un nuovo pannello per la creazione di un nuovo conto
+    // e nel caso mostra un pannello per la creazione di un nuovo conto
     CenteredPanel contentPanel;
     if (!cc.isEmpty()) {
       contentPanel = new MovimentiPanel(cc);
     } else {
-      contentPanel = new CreationAccountPanel(cc);
+      contentPanel = new CreationAccountPanel(cc, new Callable<Void>() {
+        public Void call() {
+          navbar.navigateTo("Home");
+          return null;
+        }
+      });
     }
 
     mainPanel.add(contentPanel, BorderLayout.CENTER);
 
     // Crea una navbar
     NavbarPanel navbar = new NavbarPanel(mainPanel, contentPanel, cc);
-
+    this.navbar = navbar;
     // Aggiunge la navbar al primo riquadro del pannello
     mainPanel.add(navbar, BorderLayout.WEST);
+  }
+
+  private void navigateTo() {
+
   }
 }
