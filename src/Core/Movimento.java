@@ -1,12 +1,13 @@
 package Core;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
  * Classe Movimento
  */
-public class Movimento {
+public class Movimento implements Serializable {
   /**
    * Importo della transazione
    */

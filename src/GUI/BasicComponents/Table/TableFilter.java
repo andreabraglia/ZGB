@@ -31,6 +31,11 @@ public class TableFilter {
   private int clickedRow = -1;
 
   /**
+   * Stringa di ricerca precedente.
+   */
+  private String previousSearch = "";
+
+  /**
    * Costruttore della classe.
    *
    * @param table Tabella da filtrare.
@@ -92,6 +97,11 @@ public class TableFilter {
    */
   public void highlightByString(String filterText) {
     filterText = filterText.toLowerCase();
+
+    if(!filterText.equals(previousSearch)) {
+      clickedRow = -1;
+      previousSearch = filterText;
+    }
 
     int maxRows = table.getRowCount();
     int maxColumns = table.getColumnCount();

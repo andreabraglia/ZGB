@@ -13,6 +13,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -73,20 +74,7 @@ public class AddMovimentoPanel extends CenteredPanel {
     importoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
     JLabel importoLabel = new JLabel("Importo:");
-    importoField = new JTextField(10);
-    ((AbstractDocument) importoField.getDocument()).setDocumentFilter(new DocumentFilter() {
-      final Pattern regEx = Pattern.compile("\\d*");
-
-      @Override
-      public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        Matcher matcher = regEx.matcher(text);
-        if (!matcher.matches()) {
-          return;
-        }
-
-        super.replace(fb, offset, length, text, attrs);
-      }
-    });
+    importoField = new JFormattedTextField(new DecimalFormat("#.##"));
 
     importoPanel.add(importoLabel);
 
@@ -115,7 +103,7 @@ public class AddMovimentoPanel extends CenteredPanel {
     // Aggiunge il bottone "Aggiungi movimento"
     JButton aggiungiButton = new JButton("Aggiungi movimento");
     aggiungiButton.addActionListener(e -> {
-      String importoStringa = (Objects.equals(tipoImporto.getSelectedItem(), "Uscita") ? "-" : "") + importoField.getText();
+      String importoStringa = importoField.getText();
       String descrizione = descrizioneField.getText();
       LocalDateTime data = datePicker.getSelectedDateTime();
 
@@ -124,7 +112,17 @@ public class AddMovimentoPanel extends CenteredPanel {
         return;
       }
 
-      Movimento movimento = new Movimento(Float.parseFloat(importoStringa), descrizione, data);
+
+      float importo = Float.parseFloat(importoStringa);
+      if (importo > 0 && Objects.equals(tipoImporto.getSelectedItem(), "Uscita")) {
+        importo *= -1;
+      }
+
+      Movimento movimento = new Movimento(
+        importo,
+        descrizione,
+        data
+      );
 
       contoCorrente.addMovimento(movimento);
 

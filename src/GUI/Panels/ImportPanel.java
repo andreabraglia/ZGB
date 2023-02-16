@@ -35,7 +35,7 @@ public class ImportPanel extends CenteredPanel {
 
     titolo.setFont(titleFont);
 
-    JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
+    JLabel pathLabel = new JLabel("Clicca uno dei tasti per importare il contoccorente da un file");
 
     JButton importButtonCSV = new JButton("Importa come CSV");
     importButtonCSV.addActionListener(e -> importHandler(mainPanel, "csv", contoCorrente));

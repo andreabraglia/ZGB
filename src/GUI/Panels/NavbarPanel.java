@@ -91,9 +91,6 @@ public class NavbarPanel extends CenteredPanel {
     System.out.println("[DEBUG] Navigate to " + panelName);
     mainPanel.remove(currentObject);
 
-    System.out.println("[DEBUG] Panel: " + mainPanel);
-    System.out.println("[DEBUG] Remove: " + currentObject);
-
     if (contoCorrente.isEmpty() && !panelName.equals("Importa")) {
       currentObject = new CreationAccountPanel(contoCorrente, () -> {
         navigateTo("Home");

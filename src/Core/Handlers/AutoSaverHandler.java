@@ -4,11 +4,12 @@ import Core.ContoCorrente;
 import Core.Movimento;
 
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * Classe che gestisce il salvataggio automatico del conto corrente
@@ -73,7 +74,17 @@ public class AutoSaverHandler extends Thread {
         Files.createDirectory(path);
       }
 
-      contoCorrente.writeToTXTFile(autoSaveFile.getAbsolutePath());
+
+      FileOutputStream fileOS = new FileOutputStream(autoSaveFile);
+      ObjectOutputStream objectOS = new ObjectOutputStream(fileOS);
+      ArrayList<Movimento> movimentiList = contoCorrente.getMovimenti();
+
+      Movimento[] movimenti = movimentiList.toArray(Movimento[]::new);
+
+      objectOS.writeObject(contoCorrente.getIntestatario());
+      objectOS.writeObject(contoCorrente.getNumeroCC());
+      objectOS.writeObject(contoCorrente.getSaldoIniziale());
+      objectOS.writeObject(movimenti);
     } catch (Exception error) {
       JOptionPane.showMessageDialog(null, "Errore durante il salvataggio automatico del conto corrente:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
       error.printStackTrace();
@@ -88,4 +99,32 @@ public class AutoSaverHandler extends Thread {
   public static String getAutoSaveFile() {
     return (directory + fileName);
   }
+
+  /**
+   * Funzione che legge il file di salvataggio automatico e carica il contenuto nel conto corrente
+   */
+  public void readAutoSaveFile() {
+    try {
+      FileInputStream fileIS = new FileInputStream(autoSaveFile);
+      ObjectInputStream objectIS = new ObjectInputStream(fileIS);
+
+      contoCorrente.setIntestatario((String) objectIS.readObject());
+      contoCorrente.setNumeroCC((Integer) objectIS.readObject());
+      contoCorrente.setSaldoIniziale((Float) objectIS.readObject());
+      Movimento[] movimenti = (Movimento[]) objectIS.readObject();
+
+      for (Movimento movimento : movimenti) {
+        if(movimenti[0] == movimento) {
+          continue;
+        }
+        
+        contoCorrente.addMovimento(movimento);
+      }
+
+    } catch (Exception error) {
+      JOptionPane.showMessageDialog(null, "Errore durante l'importazione del salvataggio automatico del conto corrente:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+      error.printStackTrace();
+    }
+  }
+
 }

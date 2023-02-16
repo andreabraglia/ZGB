@@ -24,7 +24,7 @@ public class ContoCorrente {
   /**
    * Lista dei movimenti del conto corrente
    */
-  private final ArrayList<Movimento> movimenti;
+  private ArrayList<Movimento> movimenti;
 
   /**
    * Contatore dei movimenti
@@ -94,7 +94,6 @@ public class ContoCorrente {
    * @param movimento Movimento da aggiungere {@link Movimento}
    */
   public void addMovimento(Movimento movimento) {
-    System.out.println("\nAggiunto movimento: " + movimento);
     movimenti.add(movimento);
     contatoreMovimenti++;
   }
@@ -290,4 +289,13 @@ public class ContoCorrente {
   public int getNumeroMovimenti() {
     return this.contatoreMovimenti;
   }
+
+  /**
+   * Funzione che reinizializza i movimenti
+   */
+  public void resetMovimenti() {
+    this.movimenti = new ArrayList<>();
+    this.contatoreMovimenti = 0;
+  }
+
 }

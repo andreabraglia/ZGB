@@ -80,6 +80,7 @@ public class CCTxtFileHandler implements FileHandler {
 
     // Legge i movimenti del conto corrente
     String line;
+    contoCorrente.resetMovimenti();
 
     while ((line = reader.readLine()) != null) {
       String[] parts = line.split("\\" + separator);

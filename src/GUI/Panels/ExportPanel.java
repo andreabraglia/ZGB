@@ -41,7 +41,7 @@ public class ExportPanel extends CenteredPanel {
     );
     titolo.setFont(titleFont);
 
-    JLabel pathLabel = new JLabel("Inserisci il percorso del file da importare");
+    JLabel pathLabel = new JLabel("Clicca uno dei tasti per esportare il conto corrente su di un file");
     JButton exportButtonTXT = new JButton("Esporta come TXT");
     exportButtonTXT.addActionListener(event -> exportHandler(mainPanel, "txt", contoCorrente));
 
