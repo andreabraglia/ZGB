@@ -1,26 +1,65 @@
 package Core;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import Core.Handlers.CCCsvFileHandler;
+import Core.Handlers.CCTxtFileHandler;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 
-
+/**
+ * Classe che rappresenta un conto corrente
+ */
 public class ContoCorrente {
+  /**
+   * Numero del conto corrente
+   */
   private int numeroCC;
+
+  /**
+   * Saldo iniziale del conto corrente
+   */
   private float saldoIniziale;
-  private ArrayList<Movimento> movimenti;
+
+  /**
+   * Lista dei movimenti del conto corrente
+   */
+  private final ArrayList<Movimento> movimenti;
+
+  /**
+   * Contatore dei movimenti
+   */
   private int contatoreMovimenti;
+
+  /**
+   * Intestatario del conto corrente
+   */
   private String intestatario;
 
+  /**
+   * Handler per il file TXT
+   */
+  private final CCTxtFileHandler txtFileHandler = new CCTxtFileHandler();
+
+  /**
+   * Handler per il file CSV
+   */
+  private final CCCsvFileHandler csvFileHandler = new CCCsvFileHandler();
+
+  /**
+   * Costruttore del conto corrente
+   */
   public ContoCorrente() {
     this(0, 0f, "");
   }
 
+  /**
+   * Costruttore del conto corrente
+   *
+   * @param numeroCC      Numero del conto corrente
+   * @param saldoIniziale Saldo iniziale del conto corrente
+   * @param intestatario  Intestatario del conto corrente
+   */
   public ContoCorrente(int numeroCC, float saldoIniziale, String intestatario) {
     this.numeroCC = numeroCC;
     this.movimenti = new ArrayList<>();
@@ -35,6 +74,11 @@ public class ContoCorrente {
     }
   }
 
+  /**
+   * Calcola il saldo attuale del conto corrente
+   *
+   * @return Saldo attuale
+   */
   public float getSaldoAttuale() {
     float saldo = 0;
     for (Movimento movimento : this.movimenti) {
@@ -44,18 +88,29 @@ public class ContoCorrente {
     return saldo;
   }
 
+  /**
+   * Aggiunge un movimento al conto corrente
+   *
+   * @param movimento Movimento da aggiungere {@link Movimento}
+   */
   public void addMovimento(Movimento movimento) {
     System.out.println("\nAggiunto movimento: " + movimento);
     movimenti.add(movimento);
     contatoreMovimenti++;
   }
 
+  /**
+   * Stampa i movimenti
+   */
   public void printMov() {
     for (Movimento mov : this.movimenti) {
       System.out.println(mov);
     }
   }
 
+  /**
+   * Stampa il conto corrente
+   */
   public void print() {
     System.out.println("Numero CC: " + this.numeroCC);
     System.out.println("Saldo Iniziale: " + this.saldoIniziale);
@@ -65,103 +120,82 @@ public class ContoCorrente {
     this.printMov();
   }
 
-  // Metodo per leggere i dati del conto corrente da file
-  private void readFromFile(String fileName, String separator) throws IOException {
-    // Apre il file in modalità di lettura
-    BufferedReader reader = new BufferedReader(new FileReader(fileName));
-
-    // Legge il numero del conto corrente
-    numeroCC = Integer.parseInt(reader.readLine());
-
-    // Legge il saldo attuale del conto corrente
-    saldoIniziale = Float.parseFloat(reader.readLine());
-
-    // Legge il intestatario del conto corrente
-    intestatario = reader.readLine();
-
-    // Legge i movimenti del conto corrente
-    String line;
-    contatoreMovimenti = 0;
-
-    while ((line = reader.readLine()) != null) {
-      String[] parts = line.split("\\" + separator);
-
-      System.out.println("[DEBUG] Line: " + line);
-      for (String part : parts) {
-        System.out.println("  [DEBUG] Part:" + part);
-      }
-
-      float amount = Float.parseFloat(parts[0]);
-      String description = parts[1];
-      LocalDateTime date = LocalDateTime.parse(parts[2], Movimento.FORMATTER);
-      Movimento movimento = new Movimento(amount, description, date);
-
-      addMovimento(movimento);
-    }
-
-    // Chiude il file
-    reader.close();
-  }
-
-  // Metodo per scrivere i dati del conto corrente su file
-  private void writeToFile(String fileName, String separator) throws IOException {
-    // Apre il file in modalità di scrittura
-    BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-
-    // Scrive il numero del conto corrente
-    writer.write(Integer.toString(numeroCC));
-    writer.newLine();
-
-    // Scrive il saldo attuale del conto corrente
-    writer.write(Float.toString(saldoIniziale));
-    writer.newLine();
-
-    // Scrive il intestatario del conto corrente
-    writer.write(intestatario);
-    writer.newLine();
-
-    // Scrive i movimenti del conto corrente
-    for (Movimento movimento : movimenti) {
-      writer.write(Float.toString(movimento.getAmount()));
-      writer.write(separator);
-      writer.write(movimento.getDescription());
-      writer.write(separator);
-      writer.write(movimento.getDate().format(Movimento.FORMATTER));
-      writer.newLine();
-    }
-
-    // Chiude il file
-    writer.close();
-  }
-
+  /**
+   * Legge i dati del conto corrente da un file TXT
+   *
+   * @param filename Nome del file
+   *
+   * @throws IOException Eccezione di I/O
+   */
   public void readFromTXTFile(String filename) throws IOException {
-    this.readFromFile(filename, "|");
+    txtFileHandler.read(filename, this);
   }
 
+  /**
+   * Scrive i dati del conto corrente su un file TXT
+   *
+   * @param filename Nome del file
+   *
+   * @throws IOException Eccezione di I/O
+   */
   public void writeToTXTFile(String filename) throws IOException {
-    this.writeToFile(filename, "|");
+    txtFileHandler.write(filename, this);
   }
 
+  /**
+   * Legge i dati del conto corrente da un file CSV
+   *
+   * @param filename Nome del file
+   *
+   * @throws IOException Eccezione di I/O
+   */
   public void readFromCSVFile(String filename) throws IOException {
-    this.readFromFile(filename, ",");
+    csvFileHandler.read(filename, this);
   }
 
+  /**
+   * Scrive i dati del conto corrente su un file CSV
+   *
+   * @param filename Nome del file
+   *
+   * @throws IOException Eccezione di I/O
+   */
   public void writeToCSVFile(String filename) throws IOException {
-    this.writeToFile(filename, ",");
+    csvFileHandler.write(filename, this);
   }
 
+  /**
+   * Restituisce il numero del conto corrente
+   *
+   * @return Numero del conto corrente
+   */
   public int getNumeroCC() {
     return numeroCC;
   }
 
+  /**
+   * Imposta il numero del conto corrente
+   *
+   * @param numeroCC Numero del conto corrente
+   */
   public void setNumeroCC(int numeroCC) {
     this.numeroCC = numeroCC;
   }
 
+  /**
+   * Restituisce il saldo iniziale del conto corrente
+   *
+   * @return Saldo iniziale del conto corrente
+   */
   public float getSaldoIniziale() {
     return saldoIniziale;
   }
 
+  /**
+   * Imposta il saldo iniziale del conto corrente
+   *
+   * @param saldoIniziale Saldo iniziale del conto corrente
+   */
   public void setSaldoIniziale(float saldoIniziale) {
     this.saldoIniziale = saldoIniziale;
     Movimento movimento = new Movimento(saldoIniziale, "Saldo iniziale", LocalDateTime.now());
@@ -169,30 +203,64 @@ public class ContoCorrente {
     contatoreMovimenti++;
   }
 
+  /**
+   * Restituisce il numero di movimenti
+   *
+   * @return Numero di movimenti
+   */
   public int getContatoreMovimenti() {
     return contatoreMovimenti;
   }
 
+  /**
+   * Imposta l'intestatario del conto corrente
+   *
+   * @param intestatario Intestatario del conto corrente
+   */
   public void setIntestatario(String intestatario) {
     this.intestatario = intestatario;
   }
 
+  /**
+   * Restituisce l'intestatario del conto corrente
+   *
+   * @return Intestatario del conto corrente
+   */
   public String getIntestatario() {
     return this.intestatario;
   }
 
+  /**
+   * Restituisce il movimento in posizione i
+   *
+   * @param i Posizione del movimento
+   *
+   * @return Movimento in posizione i
+   */
   public Movimento getMovimento(int i) {
     if (i < 0 || i >= this.contatoreMovimenti) {
       return null;
     }
 
     return (this.movimenti.get(i));
-}
+  }
 
+  /**
+   * Restituisce true se il conto corrente è vuoto
+   *
+   * @return true se il conto corrente è vuoto altrimenti false
+   */
   public boolean isEmpty() {
     return (this.intestatario.equals("") && this.numeroCC == 0);
   }
 
+  /**
+   * Elimina il movimento in posizione i
+   *
+   * @param index Posizione del movimento
+   *
+   * @return True se il movimento è stato eliminato altrimenti false
+   */
   public boolean deleteMovimento(int index) {
     if (index < 0 || index >= this.contatoreMovimenti) {
       return false;
@@ -205,10 +273,21 @@ public class ContoCorrente {
     return true;
   }
 
+  /**
+   * Restituisce la lista dei movimenti
+   *
+   * @return La lista dei movimenti
+   */
+  public ArrayList<Movimento> getMovimenti() {
+    return this.movimenti;
+  }
+
+  /**
+   * Restituisce il numero di movimenti
+   *
+   * @return Il numero di movimenti
+   */
   public int getNumeroMovimenti() {
     return this.contatoreMovimenti;
   }
 }
-
-
-

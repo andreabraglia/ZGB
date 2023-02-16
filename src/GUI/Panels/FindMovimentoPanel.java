@@ -12,14 +12,11 @@ import GUI.Enums.Dimensions;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Objects;
 
 import static GUI.Enums.UtilsComponents.SPACER;
-import static GUI.Enums.Colors.*;
-import static GUI.Enums.Dimensions.*;
 
 /**
  * Pannello per trovare e filtrare i movimenti, estende {@link CenteredPanel}
@@ -34,9 +31,8 @@ public class FindMovimentoPanel extends CenteredPanel {
    *
    * @param contoCorrente Riferimento del conto corrente su cui andranno impostati i filtri
    *
-   * @throws ParseException Eccezione lanciata in caso di errore nel parse di stringhe inserite dall'utente
    */
-  public FindMovimentoPanel(ContoCorrente contoCorrente) throws ParseException {
+  public FindMovimentoPanel(ContoCorrente contoCorrente) {
     super(true);
 
     // Crea un nuovo pannello per i campi di input

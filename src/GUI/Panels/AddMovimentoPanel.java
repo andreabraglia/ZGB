@@ -56,6 +56,7 @@ public class AddMovimentoPanel extends CenteredPanel {
    *
    * @param contoCorrente Riferimento del conto corrente a cui aggiungere il movimento
    * @param parent        Riferimento del finestra utilizzata per la visualizzazione del pannello
+   * @param callback      Funzione da eseguire al termine dell'aggiunta del movimento
    */
   public AddMovimentoPanel(ContoCorrente contoCorrente, JFrame parent, Callable<Void> callback) {
     // Imposta il layout del pannello

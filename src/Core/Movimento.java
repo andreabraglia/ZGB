@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Classe Transazione.
+ * Classe Movimento
  */
 public class Movimento {
   /**
@@ -25,7 +25,15 @@ public class Movimento {
    * Formattatore della data
    */
   public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+  /**
+   * Formato della data
+   */
   public static String DATE_FORMAT = "dd/MM/yyyy HH:mm";
+
+  /**
+   * Formato della data per la maschera
+   */
   public static String MASK_DATE_FORMAT = "##/##/#### ##:##";
 
   /**
@@ -77,11 +85,10 @@ public class Movimento {
     return String.format("Amount: %s\nDescription: %s\nDate: %s", amount, description, (date.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy"))));
   }
 
-
   /**
-   * Restituisce una stringa che rappresenta la transazione
+   * Setta l'importo del movimento.
    *
-   * @return Stringa che rappresenta l'oggetto.
+   * @param amount the amount
    */
   public void setAmount(float amount) {
     this.amount = amount;

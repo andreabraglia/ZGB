@@ -13,9 +13,6 @@ import GUI.Enums.Dimensions;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.text.ParseException;
-import java.util.concurrent.Callable;
-
 
 /**
  * Classe che crea la finestra principale della GUI
@@ -32,9 +29,8 @@ public class MainFrame extends Frame {
    *
    * @param cc Conto corrente
    *
-   * @throws ParseException Eccezione un formato non è corretto
    */
-  public MainFrame(ContoCorrente cc) throws ParseException {
+  public MainFrame(ContoCorrente cc)  {
     super("Home", 500, 500, 300, 100);
 
     // Imposta il layout del pannello
@@ -52,11 +48,9 @@ public class MainFrame extends Frame {
     if (!cc.isEmpty()) {
       contentPanel = new MovimentiPanel(cc);
     } else {
-      contentPanel = new CreationAccountPanel(cc, new Callable<Void>() {
-        public Void call() {
-          navbar.navigateTo("Home");
-          return null;
-        }
+      contentPanel = new CreationAccountPanel(cc, () -> {
+        navbar.navigateTo("Home");
+        return null;
       });
     }
 
@@ -67,9 +61,5 @@ public class MainFrame extends Frame {
     this.navbar = navbar;
     // Aggiunge la navbar al primo riquadro del pannello
     mainPanel.add(navbar, BorderLayout.WEST);
-  }
-
-  private void navigateTo() {
-
   }
 }

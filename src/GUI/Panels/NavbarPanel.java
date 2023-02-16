@@ -14,11 +14,29 @@ import java.awt.*;
  * Pannello per la navigazione tra i vari pannelli
  */
 public class NavbarPanel extends CenteredPanel {
+
+  /**
+   * Pannello principale
+   */
   JPanel mainPanel;
+
+  /**
+   * Pannello corrente
+   */
   JPanel currentObject;
+
+  /**
+   * Riferimento al conto corrente
+   */
   ContoCorrente contoCorrente;
 
-  // Costruttore della classe Navbar
+  /**
+   * Crea un nuovo pannello per la navigazione
+   *
+   * @param mainPanel     Pannello principale
+   * @param currentObject Pannello corrente
+   * @param contoCorrente Riferimento al conto corrente
+   */
   public NavbarPanel(JPanel mainPanel, JPanel currentObject, ContoCorrente contoCorrente) {
 
     this.mainPanel = mainPanel;
@@ -47,6 +65,12 @@ public class NavbarPanel extends CenteredPanel {
     setBackground(new Color(Colors.LIGHT.getHex()));
   }
 
+  /**
+   * Crea un nuovo bottone
+   *
+   * @param text Testo del bottone
+   * @return Il bottone creato
+   */
   private Button createButton(String text) {
     Button button = new Button(text);
 
@@ -58,7 +82,11 @@ public class NavbarPanel extends CenteredPanel {
     return button;
   }
 
-
+  /**
+   * Naviga verso un pannello
+   *
+   * @param panelName Nome del pannello
+   */
   public void navigateTo(String panelName) {
     System.out.println("[DEBUG] Navigate to " + panelName);
     mainPanel.remove(currentObject);
@@ -98,8 +126,8 @@ public class NavbarPanel extends CenteredPanel {
         }
       }
     } catch (Exception error) {
-      error.printStackTrace();
       JOptionPane.showMessageDialog(mainPanel, error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+      error.printStackTrace();
     }
 
     mainPanel.add(currentObject, BorderLayout.CENTER);

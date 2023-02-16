@@ -1,14 +1,26 @@
-package GUI.BasicComponents;
+package GUI.BasicComponents.FileChooser;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
-public class FileSaverChooser extends JFileChooser {
+/**
+ * Classe che estende {@link JFileChooser} per permettere di salvare un file di testo o csv
+ * con un nome specificato dall'utente.
+ * Se l'estensione non viene specificata, viene aggiunta automaticamente.
+ * Se il file esiste già, viene chiesto all'utente se sovrascriverlo.
+ */
+public class Exporter extends JFileChooser {
 
+  /**
+   * Estensione del file da salvare.
+   */
   private String extension;
 
-  public FileSaverChooser() {
+  /**
+   * Costruttore di default.
+   */
+  public Exporter() {
     super();
     setFileFilter(new FileFilter() {
       @Override
@@ -27,6 +39,11 @@ public class FileSaverChooser extends JFileChooser {
     });
   }
 
+  /**
+   * Sovrascrive il metodo {@link JFileChooser#approveSelection()} per aggiungere l'estensione
+   * al file se non è stata specificata, e per chiedere all'utente se sovrascrivere il file
+   * se esiste già.
+   */
   @Override
   public void approveSelection() {
     File file = getSelectedFile();
@@ -45,15 +62,16 @@ public class FileSaverChooser extends JFileChooser {
     if (file.exists()) {
       int result = JOptionPane.showConfirmDialog(this, "Il file esiste già, vuoi sovrascriverlo?", "Attenzione", JOptionPane.YES_NO_CANCEL_OPTION);
       switch (result) {
-        case JOptionPane.YES_OPTION: {
+        case JOptionPane.YES_OPTION -> {
           super.approveSelection();
           return;
         }
-        case JOptionPane.NO_OPTION:
-        case JOptionPane.CLOSED_OPTION: {
+
+        case JOptionPane.NO_OPTION, JOptionPane.CLOSED_OPTION -> {
           return;
         }
-        case JOptionPane.CANCEL_OPTION: {
+
+        case JOptionPane.CANCEL_OPTION -> {
           cancelSelection();
           return;
         }
@@ -63,6 +81,11 @@ public class FileSaverChooser extends JFileChooser {
     super.approveSelection();
   }
 
+  /**
+   * Imposta l'estensione del file da salvare.
+   *
+   * @param extension Estensione del file da salvare.
+   */
   public void setExtension(String extension) {
     if (extension.isEmpty() || !extension.matches("txt|csv")) {
       throw new IllegalArgumentException("L'estensione deve essere 'txt' o 'csv'");

@@ -8,14 +8,41 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.swing.*;
 
+/**
+ * Clase che crea un date picker.
+ */
 public class DatePicker extends JPanel {
 
+  /**
+   * Combobox per scegliere l'anno
+   */
   private final JComboBox<Integer> yearComboBox;
+
+  /**
+   * Combobox per scegliere il mese
+   */
   private final JComboBox<Integer> monthComboBox;
+
+  /**
+   * Combobox per scegliere il giorno
+   */
   private final JComboBox<Integer> dayComboBox;
+
+  /**
+   * Spinner per scegliere l'ora
+   */
   private final JSpinner hourSpinner;
+
+  /**
+   * Spinner per scegliere i minuti
+   */
   private final JSpinner minuteSpinner;
 
+  /**
+   * Costruttore
+   *
+   * @param bgColor Colore di sfondo del date picker
+   */
   public DatePicker(Colors bgColor) {
     GridLayout layout = new GridLayout(3, 2);
     layout.setHgap(10);
@@ -74,20 +101,36 @@ public class DatePicker extends JPanel {
     add(minuteSpinner);
   }
 
+  /**
+   * Ritorna la data selezionata.
+   *
+   * @return La data selezionata.
+   */
   public LocalDate getSelectedDate() throws NullPointerException {
-
     return (
-      LocalDate.of((Integer) yearComboBox.getSelectedItem(),
+      LocalDate.of(
+        (Integer) yearComboBox.getSelectedItem(),
         (Integer) monthComboBox.getSelectedItem(),
-        (Integer) dayComboBox.getSelectedItem())
+        (Integer) dayComboBox.getSelectedItem()
+      )
     );
   }
 
+  /**
+   * Ritorna l'ora e i minuti selezionati
+   *
+   * @return L'ora selezionata
+   */
   public LocalTime getSelectedTime() {
     return LocalTime.of((Integer) hourSpinner.
       getValue(), (Integer) minuteSpinner.getValue());
   }
 
+  /**
+   * Ritorna la data, l'ora e i minuti selezionati
+   *
+   * @return La data e l'ora selezionata
+   */
   public LocalDateTime getSelectedDateTime() {
     return LocalDateTime.of(getSelectedDate(), getSelectedTime());
   }

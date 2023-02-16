@@ -13,9 +13,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.font.TextAttribute;
-import java.text.ParseException;
 import java.util.Collections;
-import java.util.concurrent.Callable;
 
 import static GUI.Enums.UtilsComponents.*;
 
@@ -31,9 +29,8 @@ public class MovimentiPanel extends CenteredPanel {
    *
    * @param contoCorrente Il conto corrente
    *
-   * @throws ParseException Eccezione lanciata in caso di errore di parsing
    */
-  public MovimentiPanel(ContoCorrente contoCorrente) throws ParseException {
+  public MovimentiPanel(ContoCorrente contoCorrente) {
     super(true);
 
     Panel mainPanel = new Panel(Colors.WHITE, true);
@@ -128,15 +125,17 @@ public class MovimentiPanel extends CenteredPanel {
       int selectedRow = table.getTable().getSelectedRow();
       System.out.println("[DEBUG] Selected ROW: " + selectedRow);
 
-      if (selectedRow != -1) {
-        boolean isDone = contoCorrente.deleteMovimento(selectedRow);
-        if (isDone) {
-          JOptionPane.showMessageDialog(this, "Movimento eliminato con successo\n");
-          contoCorrente.printMov();
-          updateComponents(table, tableModel, filter);
-        } else {
-          JOptionPane.showMessageDialog(this, "Errore durante l'eliminazione del movimento");
-        }
+      if (selectedRow == -1) {
+        return;
+      }
+      boolean isDone = contoCorrente.deleteMovimento(selectedRow);
+
+      if (isDone) {
+        JOptionPane.showMessageDialog(this, "Movimento eliminato con successo\n");
+        contoCorrente.printMov();
+        updateComponents(table, tableModel, filter);
+      } else {
+        JOptionPane.showMessageDialog(this, "Errore durante l'eliminazione del movimento");
       }
     });
 
@@ -145,6 +144,7 @@ public class MovimentiPanel extends CenteredPanel {
     mainPanel.add(buttonsPanel);
 
     add(mainPanel);
+
   }
 
   /**

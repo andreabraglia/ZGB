@@ -1,13 +1,25 @@
-package GUI.BasicComponents;
+package GUI.BasicComponents.FileChooser;
 
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class FileChooser {
+/**
+ * Classe per la selezione di un file per caricare un conto corrente
+ */
+public class Importer {
+
+  /**
+   * File selezionato
+   */
   private File selectedFile;
 
-  public FileChooser(String extension) {
+  /**
+   * Costruttore
+   *
+   * @param extension estensione del file
+   */
+  public Importer(String extension) {
     JFileChooser fileChooser = new JFileChooser();
     FileNameExtensionFilter filter = new FileNameExtensionFilter("File ." + extension, extension);
     fileChooser.setFileFilter(filter);
@@ -18,6 +30,11 @@ public class FileChooser {
     }
   }
 
+  /**
+   * Restituisce il file selezionato
+   *
+   * @return the selectedFile
+   */
   public String getSelectedFile() {
     return selectedFile.getAbsolutePath();
   }

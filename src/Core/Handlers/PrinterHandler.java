@@ -1,21 +1,46 @@
-package Core;
+package Core.Handlers;
+
+import Core.ContoCorrente;
+import Core.Movimento;
 
 import java.awt.*;
 import java.awt.print.PageFormat;
-import java.awt.print.PrinterException;
 
 import java.awt.print.Printable;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Classe che implementa {@link Printable} e serve
+ * per la stampa del conto corrente
+ *
+ * @see Printable
+ */
 public class PrinterHandler implements Printable {
+  /**
+   * Il conto corrente da stampare
+   */
   private final ContoCorrente contoCorrente;
 
+  /**
+   * Costruttore
+   *
+   * @param contoCorrente Il conto corrente da stampare
+   */
   public PrinterHandler(ContoCorrente contoCorrente) {
     this.contoCorrente = contoCorrente;
   }
 
+  /**
+   * Stampa il conto corrente
+   *
+   * @param graphics   L'ogetto grafico
+   * @param pageFormat Il formato della pagina
+   * @param pageIndex  L'indice della pagina
+   *
+   * @return Il risultato della stampa
+   */
   @Override
-  public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+  public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
     if (pageIndex != 0) {
       return Printable.NO_SUCH_PAGE;
     }

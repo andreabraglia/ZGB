@@ -2,7 +2,7 @@ package GUI.Panels;
 
 import Core.ContoCorrente;
 import GUI.BasicComponents.CenteredPanel;
-import GUI.BasicComponents.FileChooser;
+import GUI.BasicComponents.FileChooser.Importer;
 import GUI.BasicComponents.Panel;
 import GUI.Enums.Colors;
 import GUI.Enums.Dimensions;
@@ -10,7 +10,6 @@ import GUI.Enums.Dimensions;
 import javax.swing.*;
 import java.awt.*;
 
-import static GUI.Enums.Dimensions.GAP;
 import static GUI.Enums.UtilsComponents.DIVIDER;
 import static GUI.Enums.UtilsComponents.SPACER;
 
@@ -65,17 +64,17 @@ public class ImportPanel extends CenteredPanel {
    * @param contoCorrente Il conto corrente
    */
   private void importHandler(Panel mainPanel, String extension, ContoCorrente contoCorrente) {
-    FileChooser fileChooser = new FileChooser(extension);
+    Importer importer = new Importer(extension);
 
     try {
       if (extension.equals("csv")) {
-        contoCorrente.readFromCSVFile(fileChooser.getSelectedFile());
+        contoCorrente.readFromCSVFile(importer.getSelectedFile());
       } else if (extension.equals("txt")) {
-        contoCorrente.readFromTXTFile(fileChooser.getSelectedFile());
+        contoCorrente.readFromTXTFile(importer.getSelectedFile());
       }
 
       contoCorrente.print();
-      JOptionPane.showMessageDialog(mainPanel, "Caricamento del file '" + fileChooser.getSelectedFile() + "' avvenuto con successo", "Info", JOptionPane.INFORMATION_MESSAGE);
+      JOptionPane.showMessageDialog(mainPanel, "Caricamento del file '" + importer.getSelectedFile() + "' avvenuto con successo", "Info", JOptionPane.INFORMATION_MESSAGE);
 
     } catch (Exception error) {
       JOptionPane.showMessageDialog(mainPanel, "Errore durante la lettura dei dati da file:\n " + error.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);

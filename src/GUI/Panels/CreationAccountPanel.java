@@ -8,7 +8,6 @@ import GUI.Enums.Dimensions;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 
@@ -44,6 +43,7 @@ public class CreationAccountPanel extends CenteredPanel {
    * aggiunge i componenti al suo interno, definendone anche la logica
    *
    * @param contoCorrente Riferimento del conto corrente da creare
+   * @param navigateTo    Funzione che permette di tornare alla schermata precedente
    */
   public CreationAccountPanel(ContoCorrente contoCorrente, Callable<Void> navigateTo) {
     super(true);
@@ -79,17 +79,22 @@ public class CreationAccountPanel extends CenteredPanel {
 
     // Crea il listener del bottone per creare il conto corrente
     createButton.addActionListener(e -> {
-      // Legge i valori inseriti nei campi di input
-      int numeroCC = Integer.parseInt(numeroCCField.getText());
-      float saldoIniziale = Float.parseFloat(saldoAttualeField.getText());
-      String intestatario = intestatarioField.getText();
-      if (numeroCC == contoCorrente.getNumeroCC() || intestatario.equals(contoCorrente.getIntestatario())) {
-        JOptionPane.showMessageDialog(
-          this,
-          "Inseirsci correttamente i dati!",
-          "Errore",
-          JOptionPane.ERROR_MESSAGE
-        );
+      int numeroCC;
+      float saldoIniziale;
+      String intestatario;
+
+      try {
+        // Legge i valori inseriti nei campi di input
+        numeroCC = Integer.parseInt(numeroCCField.getText());
+        saldoIniziale = Float.parseFloat(saldoAttualeField.getText());
+        intestatario = intestatarioField.getText();
+      } catch (Exception error) {
+        showErrorMessage();
+        return;
+      }
+
+      if (numeroCC == contoCorrente.getNumeroCC() || intestatario.trim().equals(contoCorrente.getIntestatario())) {
+        showErrorMessage();
         return;
       }
       contoCorrente.setNumeroCC(numeroCC);
@@ -113,6 +118,18 @@ public class CreationAccountPanel extends CenteredPanel {
         throw new RuntimeException(ex);
       }
     });
+  }
+
+  /**
+   * Funziona che mostra un messaggio di errore se i dati inseriti non sono validi
+   */
+  private void showErrorMessage() {
+    JOptionPane.showMessageDialog(
+      this,
+      "Inserisci i dati correttamente",
+      "Errore",
+      JOptionPane.ERROR_MESSAGE
+    );
   }
 }
 

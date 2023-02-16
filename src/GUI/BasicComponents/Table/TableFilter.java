@@ -11,26 +11,57 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.time.temporal.WeekFields;
 
+/**
+ * Classe che permette di filtrare una tabella in base a una stringa.
+ */
 public class TableFilter {
+  /**
+   * Oggetto che permette di filtrare la tabella.
+   */
   private final TableRowSorter<TableModel> sorter;
+
+  /**
+   * Tabella da filtrare.
+   */
   private final JTable table;
 
+  /**
+   * Numero di volte che si effettua la stessa ricerca.
+   */
   private int clickedRow = -1;
 
+  /**
+   * Costruttore della classe.
+   *
+   * @param table Tabella da filtrare.
+   */
   public TableFilter(JTable table) {
     this.table = table;
     this.sorter = new TableRowSorter<>(table.getModel());
     table.setRowSorter(sorter);
   }
 
+  /**
+   * Metodo che permette di evidenziare una riga della tabella.
+   *
+   * @param row Riga da evidenziare.
+   */
   public void highlightRow(int row) {
     table.setRowSelectionInterval(row, row);
   }
 
+  /**
+   * Metodo che permette di rimuovere l'evidenziazione di una riga.
+   */
   public void removeHighlight() {
     table.clearSelection();
   }
 
+  /**
+   * Metodo che permette di evidenziare più righe della tabella.
+   *
+   * @param columns Righe da evidenziare.
+   */
   public void highlightRows(ArrayList<Integer> columns) {
     int j = 0;
 
@@ -45,10 +76,20 @@ public class TableFilter {
     }
   }
 
+  /**
+   * Metodo che di filtrare tramite una data stringa
+   *
+   * @param filterText Stringa da filtrare.
+   */
   public void filterByString(String filterText) {
     sorter.setRowFilter(RowFilter.regexFilter("(?i)" + filterText));
   }
 
+  /**
+   * Metodo che di evidenziare le righe tramite una data stringa
+   *
+   * @param filterText Stringa da filtrare.
+   */
   public void highlightByString(String filterText) {
     filterText = filterText.toLowerCase();
 
@@ -70,14 +111,30 @@ public class TableFilter {
     highlightRows(rows);
   }
 
+  /**
+   * Metodo che permette di filtrare tramite una data stringa e una colonna.
+   *
+   * @param text   Stringa da filtrare.
+   * @param column Colonna da filtrare.
+   */
   public void filterByCol(String text, int column) {
     sorter.setRowFilter(RowFilter.regexFilter(text, column));
   }
 
+  /**
+   * Metodo che permette di filtrare per anno
+   *
+   * @param year Stringa che denota un anno.
+   */
   public void filterByYear(String year) {
     filterByCol(".*/.*/" + year, MovimentiTableModel.getColumnIndex("Data"));
   }
 
+  /**
+   * Metodo che permette di filtrare per mese
+   *
+   * @param month Stringa che denota un mese.
+   */
   public void filterByMonth(String month) {
     if (month.length() == 1) {
       month = "0" + month;
@@ -85,6 +142,11 @@ public class TableFilter {
     filterByCol(".*/" + month + "/.*", MovimentiTableModel.getColumnIndex("Data"));
   }
 
+  /**
+   * Metodo che permette di filtrare per giorno
+   *
+   * @param day Stringa che denota un giorno.
+   */
   public void filterByDay(String day) {
     if (day.length() == 1) {
       day = "0" + day;
@@ -93,6 +155,12 @@ public class TableFilter {
     filterByCol(day + "/.*/.*", MovimentiTableModel.getColumnIndex("Data"));
   }
 
+  /**
+   * Metodo che permette di filtrare per il numero della settimana
+   * dell'anno attuale
+   *
+   * @param week Stringa che denota una settimana
+   */
   public void filterByWeek(String week) {
     int maxWeeks = Calendar.getInstance().getWeeksInWeekYear();
     int weekNumber = Integer.parseInt(week);
@@ -122,6 +190,9 @@ public class TableFilter {
     filterByCol(String.valueOf(regex), MovimentiTableModel.getColumnIndex("Data"));
   }
 
+  /**
+   * Metodo che aggiorna il sorter({@link TableFilter#sorter})
+   */
   public void update() {
     sorter.modelStructureChanged();
   }

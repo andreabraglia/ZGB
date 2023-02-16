@@ -1,9 +1,9 @@
 package GUI.Panels;
 
 import Core.ContoCorrente;
-import Core.PrinterHandler;
+import Core.Handlers.PrinterHandler;
 import GUI.BasicComponents.CenteredPanel;
-import GUI.BasicComponents.FileSaverChooser;
+import GUI.BasicComponents.FileChooser.Exporter;
 import GUI.BasicComponents.Panel;
 import GUI.Enums.Colors;
 import GUI.Enums.Dimensions;
@@ -19,6 +19,7 @@ import static GUI.Enums.Dimensions.GAP;
 /**
  * Panello che estende {@link CenteredPanel} e serve
  * per l'esportazione su file e la stampa del conto corrente,
+ *
  * @see CenteredPanel
  */
 public class ExportPanel extends CenteredPanel {
@@ -26,6 +27,8 @@ public class ExportPanel extends CenteredPanel {
   /**
    * Costruttore del pannello che lo inizializza,
    * aggiunge i componenti al suo interno, definendone anche la logica
+   *
+   * @param contoCorrente Riferimento del conto corrente da esportare
    */
   public ExportPanel(ContoCorrente contoCorrente) {
     super(true);
@@ -79,12 +82,13 @@ public class ExportPanel extends CenteredPanel {
 
   /**
    * Metodo che gestisce l'esportazione del conto corrente su file
-   * @param mainPanel Pannello principale
-   * @param extension Estensione del file da esportare
+   *
+   * @param mainPanel     Pannello principale
+   * @param extension     Estensione del file da esportare
    * @param contoCorrente Conto corrente da esportare
    */
   private void exportHandler(Panel mainPanel, String extension, ContoCorrente contoCorrente) {
-    FileSaverChooser fileChooser = new FileSaverChooser();
+    Exporter fileChooser = new Exporter();
     fileChooser.setExtension(extension);
 
     if (fileChooser.showSaveDialog(mainPanel) == JFileChooser.APPROVE_OPTION) {

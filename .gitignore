@@ -229,3 +229,5 @@ conto_corrente_data*
 bin
 .backup
 .backup/*
+docs
+docs/*
