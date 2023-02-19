@@ -58,6 +58,7 @@ public class DatePicker extends JPanel {
     yearComboBox = new JComboBox<>(years);
     yearComboBox.getModel().setSelectedItem(LocalDate.now().getYear());
 
+
     // Crea una selezione di mesi
     Integer[] months = new Integer[12];
     for (int i = 1; i <= 12; i++) {
@@ -74,6 +75,9 @@ public class DatePicker extends JPanel {
     dayComboBox = new JComboBox<>(days);
     dayComboBox.getModel().setSelectedItem(LocalDate.now().getDayOfMonth());
 
+    yearComboBox.addActionListener(e -> handleChange());
+    monthComboBox.addActionListener(e -> handleChange());
+    dayComboBox.addActionListener(e -> handleChange());
 
     // Crea uno spinner per le ore
     SpinnerNumberModel hourModel = new SpinnerNumberModel(0, 0, 23, 1);
@@ -133,5 +137,39 @@ public class DatePicker extends JPanel {
    */
   public LocalDateTime getSelectedDateTime() {
     return LocalDateTime.of(getSelectedDate(), getSelectedTime());
+  }
+
+  /**
+   * Aggiorna il numero di giorni nel mese in base al mese e all'ann scelto
+   */
+  public void handleChange() {
+    try {
+      // Aggiorna il numero di giorni nel mese
+      int year = yearComboBox.getSelectedItem() != null ?
+        (Integer) yearComboBox.getSelectedItem() :
+        LocalDate.now().getYear();
+      int month = monthComboBox.getSelectedItem() != null
+        ? (Integer) monthComboBox.getSelectedItem()
+        : LocalDate.now().getMonthValue();
+      int day = dayComboBox.getSelectedItem() != null
+        ? (Integer) dayComboBox.getSelectedItem()
+        : LocalDate.now().getDayOfMonth();
+
+      int maxDay = LocalDate.of(year, month, 1).lengthOfMonth();
+      if (day > maxDay) {
+        dayComboBox.getModel().setSelectedItem(maxDay);
+      }
+
+      Integer[] days = new Integer[maxDay];
+      for (int i = 1; i <= maxDay; i++) {
+        days[i - 1] = i;
+      }
+
+      dayComboBox.setModel(new DefaultComboBoxModel<>(days));
+
+    } catch (Exception exception) {
+      JOptionPane.showMessageDialog(null, "Errore nel calcolo del numero di giorni nel mese");
+      exception.printStackTrace();
+    }
   }
 }
